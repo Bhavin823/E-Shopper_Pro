@@ -23,9 +23,10 @@ def Cat_Subcat_Nav_View():
     return categoryHeader
 
 def CategoryView():
-
     categories = CategoryModel.objects.all()
     
     # print("category from category_app:",)
     return categories
 
+def SubcategoryView(request):
+    pass

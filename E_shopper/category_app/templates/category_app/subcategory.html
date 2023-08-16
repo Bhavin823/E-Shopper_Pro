@@ -3,7 +3,7 @@
 {% block content %}
 
     <!--slider-->
-	<section id="slider">
+	{% comment %} <section id="slider">
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
@@ -66,7 +66,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> {% endcomment %}
 	<!--/slider-->
 	
 	<!--main content-->
@@ -155,10 +155,10 @@
 											<div class="productinfo text-center">
 												{% if category.categoryImage %}
 												<img src="{{ category.categoryImage.url }}" alt="{{ category.categoryName }}"
-												style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom:1px solid #ddd;" />
+												style="display: block; width: 100%; aspect-ratio: 1/1; border:1px solid #ddd;" />
 												{% else %}
 												<img src="#" alt="{{category.categoryName}} image" 
-												style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom:1px solid #ddd;" />
+												style="display: block; width: 100%; aspect-ratio: 1/1; border:1px solid #ddd;" />
 												{% endif %}
 												<h2>{{category.categoryName}}</h2>
 												<p>Up to 50% off</p>
