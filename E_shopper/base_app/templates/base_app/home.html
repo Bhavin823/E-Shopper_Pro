@@ -144,12 +144,12 @@
 				<!--right part-->
 				<div class="col-sm-9 padding-right">
 
-					<!--features_items-->
+					<!--features_Category-->
 					<div class="features_items">
 						<h2 class="title text-center">Features Category</h2>
 						{% for category in categories %}
 							<div class="col-sm-4">
-								<a href="#">
+								<a href="{% url 'category_app:subcat' category.slug %}">
 									<div class="product-image-wrapper" style="border:1px solid #ddd ;">
 										<div class="single-products">
 											<div class="productinfo text-center">
@@ -161,7 +161,7 @@
 												style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom:1px solid #ddd;" />
 												{% endif %}
 												<h2>{{category.categoryName}}</h2>
-												<p>Up to 50% off</p>
+												<p>{{category.slug}}</p>
 												<!-- <a href="#" class="btn btn-default add-to-cart"><i
 														class="fa fa-shopping-cart"></i>Add to cart</a> -->
 											</div>

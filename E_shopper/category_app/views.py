@@ -2,6 +2,7 @@ from django.shortcuts import render
 from category_app.models import *
 
 # Create your views here.
+# for left navigation category and subcategory 
 def Cat_Subcat_Nav_View():
     categories= CategoryModel.objects.all()
     
@@ -22,11 +23,21 @@ def Cat_Subcat_Nav_View():
 
     return categoryHeader
 
+# fech all category
 def CategoryView():
     categories = CategoryModel.objects.all()
     
     # print("category from category_app:",)
     return categories
 
-def SubcategoryView(request):
-    pass
+# test subcategorypage
+def SubcategoryView(request,subcatslug):
+    categoryslug = CategoryModel.objects.get(slug=subcatslug)
+    subcatedata = SubCategoryModel.objects.filter(category=categoryslug)
+    cat_subcat_for_nav = Cat_Subcat_Nav_View()
+    print(subcatedata[0].category)
+    context = {
+        'cat_sub_nav':cat_subcat_for_nav,
+        'subcategories':subcatedata,
+    }
+    return render(request,'category_app/subcategory.html',context)
