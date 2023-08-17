@@ -8,7 +8,6 @@ app_name = 'category_app'
 
 urlpatterns = [
 
-    # path('', views.baseview),
     path('subcat/<slug:subcatslug>',SubcategoryView,name='subcat'),
     
 ]
