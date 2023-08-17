@@ -5,7 +5,7 @@ from category_app.models import *
 # for left navigation category and subcategory 
 def Cat_Subcat_Nav_View():
     categories= CategoryModel.objects.all()
-    
+
     categoryHeader=[]
     for category in categories:
         subcategories=SubCategoryModel.objects.filter(category=category.pk)
