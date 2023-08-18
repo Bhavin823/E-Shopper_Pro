@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 class CategoryModel(models.Model):
     categoryName = models.CharField(max_length=100,unique=True)
-    categoryImage = models.ImageField(upload_to='category',blank=True,)
+    categoryImage = models.ImageField(upload_to='category/',blank=True,)
     slug = models.SlugField(unique=True, max_length=100, blank=True, editable=False)
 
     def save(self, *args, **kwargs):
@@ -19,7 +19,7 @@ class CategoryModel(models.Model):
 class SubCategoryModel(models.Model):
     subcategoryName= models.CharField(max_length=100)
     category = models.ForeignKey(CategoryModel,on_delete=models.CASCADE)
-    subcategoryImage = models.ImageField(upload_to='subcategory',blank=True,)
+    subcategoryImage = models.ImageField(upload_to='subcategory/',blank=True,)
 
     slug = models.SlugField(unique=True, max_length=100, blank=True, editable=False)
 

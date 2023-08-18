@@ -78,21 +78,21 @@
 
 					<!--features_subcategory-->
 					<div class="features_items">
-						<h2 class="title text-center">{{subcategories.first.category}}</h2>
-						{% for subcat in subcategories %}
+						<h2 class="title text-center">{{products.first.category}}</h2>
+						{% for product in products %}
 							<div class="col-sm-4">
-								<a href="{% url 'product_app:products' subcat.slug %}">
+								<a href="#">
 									<div class="product-image-wrapper" style="border:1px solid #ddd ;">
 										<div class="single-products">
 											<div class="productinfo text-center">
-												{% if subcat.subcategoryImage %}
-												<img src="{{ subcat.subcategoryImage.url }}" alt="{{ subcat.subcategoryName }}"
+												{% if product.ProductImage %}
+												<img src="{{ product.ProductImage.url }}" alt="{{ product.ProductName }}"
 												style="display: block; width: 100%; aspect-ratio: 1/1; border:1px solid #ddd;" />
 												{% else %}
-												<img src="#" alt="{{subcat.subcategoryName}} image" 
+												<img src="#" alt="{{product.ProductName}} image" 
 												style="display: block; width: 100%; aspect-ratio: 1/1; border:1px solid #ddd;" />
 												{% endif %}
-												<h2>{{subcat.subcategoryName}}</h2>
+												<h2>{{product.ProductName}}</h2>
 												<p>Up to 50% off</p>
 												<!-- <a href="#" class="btn btn-default add-to-cart"><i
 														class="fa fa-shopping-cart"></i>Add to cart</a> -->
