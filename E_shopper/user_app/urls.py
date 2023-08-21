@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.urls import path
-from base_app import views
-from category_app.views import *
+from user_app.views import signupView
 
-app_name = 'category_app'
+app_name = 'user_app'
 
 urlpatterns = [
-    path('subcat/<slug:subcatslug>', SubcategoryView, name='subcat'),
-    # ... other category app URL patterns ...
+    
+    path('signup/',signupView,name='signup'),
+
 ]
