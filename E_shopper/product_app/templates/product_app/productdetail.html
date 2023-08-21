@@ -1,0 +1,352 @@
+{% extends 'base_app/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<section>
+    <div class="container">
+        <div class="row">
+            <!--left part-->
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Category</h2>
+                    <!--category-Navbar-->
+                    <div class="panel-group category-products" id="accordian">
+                        {% for category in cat_sub_nav %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordian" href="#{{ category.catName|slugify }}">
+                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                        {{category.catName}}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="{{ category.catName|slugify }}" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        {% for subcat in category.subcategory %}
+                                        <li><a href="#">{{subcat.subName}} </a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!--/category-products-->
+                
+                    <!--brands_products-->
+                    <div class="brands_products">
+                        <h2>Brands</h2>
+                        <div class="brands-name">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#"> <span class="pull-right">(50)</span>Acne</a></li>
+                                <li><a href="#"> <span class="pull-right">(56)</span>Grüne Erde</a></li>
+                                <li><a href="#"> <span class="pull-right">(27)</span>Albiro</a></li>
+                                <li><a href="#"> <span class="pull-right">(32)</span>Ronhill</a></li>
+                                <li><a href="#"> <span class="pull-right">(5)</span>Oddmolly</a></li>
+                                <li><a href="#"> <span class="pull-right">(9)</span>Boudestijn</a></li>
+                                <li><a href="#"> <span class="pull-right">(4)</span>Rösch creative culture</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--/brands_products-->
+                    
+                    {% comment %} <!--price-range-->
+                    <div class="price-range">
+                        <h2>Price Range</h2>
+                        <div class="well text-center">
+                             <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+                             <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+                        </div>
+                    </div>
+                    <!--/price-range--> {% endcomment %}
+                    
+                    <!--shipping-->
+                    <div class="shipping text-center">
+                        <img src="{% static 'images/home/shipping.jpg' %}" alt="" />
+                    </div>
+                    <!--/shipping-->
+                
+                </div>
+            </div>
+            <!--left part-->
+
+            <!--right part-->
+            <div class="col-sm-9 padding-right">
+                <h2 style="color: #FE980F;
+                font-family: 'Roboto', sans-serif;
+                font-size: 18px;
+                font-weight: 700;
+                margin: 0 auto 30px;
+                /* text-align: center; */
+                text-transform: uppercase;
+                position: relative;
+                z-index: 3;">Product Detail</h2>
+                
+                <!--product-details-->
+                <div class="product-details">
+                    <div class="col-sm-5">
+                        <div class="view-product">
+                            <img src="{{ productdetail.ProductImage.url }}" alt="" style="width: 100%;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="product-information"><!--/product-information-->
+                            <!-- <img src="images/product-details/new.jpg" class="newarrival" alt="" /> -->
+                            <h2>{{productdetail.ProductName}}</h2>
+                            <!-- <p>Web ID: 1089772</p> -->
+                            <!-- <img src="images/product-details/rating.png" alt="" /> -->
+                            <span>
+                                <span>₹{{productdetail.ProductPrice}}</span>
+                                <!-- <label>Quantity:</label> -->
+                                <!-- <input type="number" value="1" min= "0" id= "qty" name= "quantity" /> -->
+                                <div class="btn1" style="display: inline;">
+                                    <button class="mainusbtn">-</button>
+                                    <button class="mainbtn" class="btn btn-default" class="fa fa-shopping-cart">ADD TO CART</button>
+                                    <button class="plusbtn">+</button>
+                                </div>
+                                <!-- <button type="button" class="btn btn-fefault cart">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    Add to cart
+                                </button> -->
+                            </span>
+                            <p><b>Availability:</b> In Stock</p>
+                            <p><b>Condition:</b> New</p>
+                            {% if productdetail.category.categoryName == "Books" %}
+                                <p><b>Author:</b> {{productdetail.brandName}}</p>
+                            {% else %}
+                                <p><b>Brand:</b> {{productdetail.brandName}}</p>
+                            {% endif %}
+                            <button type="button" class="btn btn-fefault cart" style="margin-left: 0px;">Buy Now</button>
+                        </div><!--/product-information-->
+                        
+                    </div>
+                </div>
+                <!--/product-details-->
+                
+                <!--category-tab-->
+                <div class="category-tab shop-details-tab">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+                            <!-- <li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
+                            <li><a href="#tag" data-toggle="tab">Tag</a></li> -->
+                            <li><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <!-- product detail table -->
+                        <div class="tab-pane fade active in" id="details" >
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr class="techSpecRow">
+                                    <th colspan="2">Product Details</th>
+                                    </tr>
+                                    <tr class="techSpecRow">
+                                    <td colspan="2">{{productdetail.ProductDetail}}</td>
+                                    </tr>
+                                    <tr class="techSpecRow">
+                                    <td class="techSpecTD1">Brand:</td>
+                                    <td class="techSpecTD2">{{productdetail.brandName}}</td>
+                                    </tr>
+                                    <tr class="techSpecRow">
+                                    <td class="techSpecTD1">Model:</td>
+                                    <td class="techSpecTD2">{{productdetail.ProductName}}</td>
+                                    </tr>
+                                    <tr class="techSpecRow">
+                                    <td class="techSpecTD1">Released on:</td>
+                                    <td class="techSpecTD2"> 2011-01-28</td>
+                                    </tr>
+                                    <tr class="techSpecRow">
+                                    <td class="techSpecTD1">Dimensions:</td>
+                                    <td class="techSpecTD2"> 5.50" h x 5.50" w x 2.00" l, .75 pounds</td>
+                                    </tr>
+                                    <tr class="techSpecRow">
+                                    <td class="techSpecTD1">Display size:</td>
+                                    <td class="techSpecTD2">3</td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                        </div>
+                        <!-- product detail table -->
+            
+                        <!-- product review -->
+                        <div class="tab-pane fade " id="reviews" >
+                            <div class="col-sm-12">
+                                <ul>
+                                    <li><a href=""><i class="fa fa-user"></i>Bhavin</a></li>
+                                    <li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
+                                    <li><a href=""><i class="fa fa-calendar-o"></i>15 DEC 2022</a></li>
+                                </ul>
+                                <p>{{productdetail.ProductDetail}}</p>
+                                <p><b>Write Your Review</b></p>
+                                
+                                <form action="#">
+                                    <span>
+                                        <input type="text" placeholder="Your Name"/>
+                                        <input type="email" placeholder="Email Address"/>
+                                    </span>
+                                    <textarea name="" ></textarea>
+                                    <b>Rating: </b> <img src="{% static 'images/product-details/rating.png' %}" alt="" />
+                                    <button type="button" class="btn btn-default pull-right">
+                                        Submit
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- product review -->
+                    </div>
+                </div>
+                <!--/category-tab-->
+                
+                <!--recommended_products-->
+                <div class="recommended_items">
+                    <h2 class="title text-center">recommended items</h2>
+            
+                    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                {% for i in allproductkey %}
+                                    {% if i.id < 4 %}	
+                                        <div class="col-sm-4">
+                                            <div class="product-image-wrapper" style="border:1px solid #ddd ;">
+                                                <div class="single-products">
+                                                    <div class="productinfo text-center">
+                                                        <img src=" {{i.productImage.url}} " alt="" style="width:100%; height:255px"/>
+                                                        <h2>₹{{i.productPrice}}</h2>
+                                                        <p>{{i.productName}}</p>
+                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    </div>
+                                                <!-- <div class="product-overlay">
+                                                    <div class="overlay-content">
+                                                        <h2>$56</h2>
+                                                        <p>Easy Polo Black Edition</p>
+                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                            <!-- <div class="choose">
+                                                <ul class="nav nav-pills nav-justified">
+                                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                                </ul>
+                                            </div> -->
+                                        </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="item">
+                                {% for i in allproductkey %}
+                                    {% if i.id >= 4  %}
+                                        {% if  i.id < 7 %}	
+                                            <div class="col-sm-4">
+                                                <div class="product-image-wrapper" style="border:1px solid #ddd ;">
+                                                    <div class="single-products">
+                                                        <div class="productinfo text-center">
+                                                            <img src=" {{i.productImage.url}} " alt="" style="width:255px; height:255px"/>
+                                                            <h2>₹{{i.productPrice}}</h2>
+                                                            <p>{{i.productName}}</p>
+                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                        </div>
+                                                </div>
+                                                <!-- <div class="choose">
+                                                    <ul class="nav nav-pills nav-justified">
+                                                        <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                                        <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                                    </ul>
+                                                </div> -->
+                                            </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <a class="left recommended-item-control" href="#recommended-item-carousel"
+                            data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a class="right recommended-item-control" href="#recommended-item-carousel"
+                            data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <!--/recommended_products-->
+            </div>
+            <!--right part-->
+        
+        </div>
+    
+    </div>
+
+</section>
+<!--main content-->
+
+<style>
+    .btn1 {
+        width: 150px;
+        height: 40px;
+        padding-bottom: 20%;
+    }
+
+    .btn1 button {
+        background: #FE980F;
+        border: none;
+        /* border-radius: 8%; */
+        padding: 7px 12px;
+        font-size: 1.4rem;
+        color: white;
+        cursor: pointer;
+        outline: none;
+        
+    }
+
+    .plusbtn,
+    .mainusbtn {
+        display: none;
+        font-weight: 700;
+    }
+</style>
+
+
+
+<script>
+    let btn = document.querySelector('.mainbtn');
+    let pbtn = document.querySelector('.plusbtn');
+    let mbtn = document.querySelector('.mainusbtn');
+
+    btn.addEventListener("click", () => {
+        if (btn.innerText == 'ADD TO CART') {
+            btn.innerText = 1;
+            pbtn.style.display = 'inline-block';
+            mbtn.style.display = 'inline-block';
+        }
+    })
+
+    mbtn.addEventListener("click", () => {
+        if (btn.innerText == 5) {
+            pbtn.style.display = 'inline-block';
+        }
+        if (btn.innerText < 2) {
+            btn.innerText = 'ADD TO CART';
+            pbtn.style.display = 'none';
+            mbtn.style.display = 'none';
+        } else {
+            btn.innerText = btn.innerText - 1;
+        }
+    })
+
+    pbtn.addEventListener("click", () => {
+        btn.innerText = +(btn.innerText) + +1;
+
+        // if(btn.innerText == 5){
+        //     pbtn.style.display = 'none';
+        // }
+    })
+</script>
+{% endblock content %}	

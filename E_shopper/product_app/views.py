@@ -15,3 +15,13 @@ def ProductView(request,productslug):
         'products' : products
     }
     return render(request,'product_app/product.html',context)
+
+def ProductDetailView(request,productdetailslug):
+    productdetail = ProductModel.objects.get(slug=productdetailslug)
+    print(productdetail)
+    cat_subcat_for_nav = Cat_Subcat_Nav_View()
+    context = {
+        'cat_sub_nav' : cat_subcat_for_nav,
+        'productdetail': productdetail,
+    }
+    return render(request,'product_app/productdetail.html',context)

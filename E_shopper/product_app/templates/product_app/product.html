@@ -84,7 +84,7 @@
 								<div class="product-image-wrapper" style="border:1px solid #ddd ;">
 									<div class="single-products">
 										<div class="productinfo text-center">
-											<a href="#">	
+											<a href="{% url 'product_app:productdetail' product.slug %}">	
 												{% if product.ProductImage %}
 													<img src="{{ product.ProductImage.url }}" alt="{{ product.ProductName }}"
 													style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom: 1px solid #ddd;" />
