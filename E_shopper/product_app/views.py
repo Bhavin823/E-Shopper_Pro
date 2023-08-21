@@ -8,7 +8,7 @@ def ProductView(request,productslug):
     subcategoryslug = SubCategoryModel.objects.get(slug=productslug)
     products  = ProductModel.objects.filter(subcategory=subcategoryslug)
     cat_subcat_for_nav = Cat_Subcat_Nav_View()
-
+    print(products[0].subcategory)
     print("products:",products)
     context = {
         'cat_sub_nav' : cat_subcat_for_nav,
