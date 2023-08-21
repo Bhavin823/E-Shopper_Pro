@@ -78,7 +78,8 @@
 
 					<!--features_products-->
 					<div class="features_items">
-						<h2 class="title text-center">{{products.first.subcategory}}</h2>
+						{% comment %} <h2 class="title text-center">{{products.first.subcategory}}</h2> {% endcomment %}
+						<h2 class="title text-center">{{subcateheadername.subcategoryName}}</h2>
 						{% for product in products%}
 							<div class="col-sm-4">
 								<div class="product-image-wrapper" style="border:1px solid #ddd ;">

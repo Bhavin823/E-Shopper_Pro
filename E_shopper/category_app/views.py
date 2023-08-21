@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from category_app.models import *
 
 # Create your views here.
@@ -32,12 +32,15 @@ def CategoryView():
 
 # test subcategorypage
 def SubcategoryView(request,subcatslug):
-    categoryslug = CategoryModel.objects.get(slug=subcatslug)
-    subcatedata = SubCategoryModel.objects.filter(category=categoryslug)
-    cat_subcat_for_nav = Cat_Subcat_Nav_View()
-    print(subcatedata[0].category)
+    categoryslug = get_object_or_404(CategoryModel, slug=subcatslug)  # fetch category slug  
+    subcatedata = SubCategoryModel.objects.filter(category=categoryslug)  # fetch subcategory which match with category
+    
+    cat_subcat_for_nav = Cat_Subcat_Nav_View() # for leftsidebar
+
+    catheadername = CategoryModel.objects.get(slug=subcatslug)  # for display categoryname on subcategory page
     context = {
         'cat_sub_nav':cat_subcat_for_nav,
+        'catheadername':catheadername,
         'subcategories':subcatedata,
     }
     return render(request,'category_app/subcategory.html',context)

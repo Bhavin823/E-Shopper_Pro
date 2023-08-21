@@ -78,7 +78,7 @@
 
 					<!--features_subcategory-->
 					<div class="features_items">
-						<h2 class="title text-center">{{subcategories.first.category}}</h2>
+						<h2 class="title text-center">{{catheadername.categoryName}}</h2>
 						{% for subcat in subcategories %}
 							<div class="col-sm-4">
 								<a href="{% url 'product_app:products' subcat.slug %}">
