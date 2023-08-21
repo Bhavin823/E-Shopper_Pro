@@ -1,0 +1,32 @@
+{% extends 'base_app/base.html' %}
+{% load static %}
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <!--signup section-->
+            <div class="col-sm-4 col-sm-offset-1 ">
+                <!--login form-->
+                <div class="login-form">
+                    <h2>Login to your account</h2>
+                    {% csrf_token %}
+                    <form method ="POST">
+                        <input type="email" name="your_name" id="your_name" placeholder="Email Address" style="color: black;"/>
+                        <input type="password" name="your_pass" id="your_pass" placeholder="Password" />
+                        <span>
+                            <input type="checkbox" class="checkbox"> Keep me signed in
+                        </span>
+                        <button type="submit" name="signin" id="signin" value="Log in"class="btn btn-default">Login</button>
+                        <br>
+                        <h5>Don't have accounr? <a href="{% url 'user_app:signup' %}">Create Account</a></h5>
+                    </form>
+                </div>
+                <!--/login form-->
+            </div>
+            <!--signup section-->
+        </div>
+    </div>
+</section>
+{% endblock content %}

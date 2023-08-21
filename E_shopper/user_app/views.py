@@ -4,4 +4,7 @@ from django.contrib.auth import authenticate,login ,logout
 
 # Create your views here.
 def signupView(request):
-    return render(request,'user_app/signin.html')
+    return render(request,'user_app/signup.html')
+
+def loginView(request):
+    return render(request,'user_app/login.html')
