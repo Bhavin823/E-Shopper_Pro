@@ -6,10 +6,15 @@ app_name = 'user_app'
 
 urlpatterns = [
     
-    path('signup/',signupView,name='signup'),
-    # path('signuphandle/',handelSignup,name='signuphandle'),
-    path('signuphandle',handelSignup, name='signuphandle'),
+    # signup handle
+    path('signup/', signupView, name='signup'),
+    path('signuphandle', handelSignup, name='signuphandle'),
 
-    path('login/',loginView,name='login'),
+    # login handle
+    path('login/', loginView, name='login'),
+    path('loginhandle', handleLogin, name='loginhandle'),
+
+    # logout handle
+    path('logouthandle',logouthandle, name='logouthandle')
 
 ]

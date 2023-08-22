@@ -47,3 +47,26 @@ def handelSignup(request):
 
 def loginView(request):
     return render(request,'user_app/login.html')
+
+def handleLogin(request):
+    if request.method == "POST":
+        loginusername = request.POST['loginusername']
+        loginpassword = request.POST['loginpass']
+
+        user = authenticate(username = loginusername, password = loginpassword)
+
+        if user is not None:
+            # If the user is authenticated, log them in and redirect to the home page
+            login(request,user)
+            print('login successfully')
+            return redirect('home')
+        else:
+            # If authentication fails, render the login page with an error message
+            return render(request,'user_app/login.html', {'messagekey':" Inavalid Credentials !"})
+    # If the request method is not POST, return a 404 response
+    return HttpResponse('404 - Not Found')
+
+def logouthandle(request):
+    logout(request)
+    print("logout")
+    return redirect('home')
