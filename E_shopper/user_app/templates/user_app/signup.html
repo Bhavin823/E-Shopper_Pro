@@ -10,19 +10,27 @@
             <div class="col-sm-4 col-sm-offset-1 ">
                 <div class="signup-form">
                     <h2>New User Signup!</h2>
-                    <form method="POST">
+                    <form method="post" action="{% url 'user_app:signuphandle' %}">
                         {% csrf_token %}
-                        <input type="text" name="name" id="name" placeholder="Name" style="color: black;" required/>
-                        <input type="email" name="email" id="email" placeholder="Email Address" style="color: black;" required/>
-                        <input type="number" maxlength="10" name="contact" id="contact" placeholder="Contact No" style="color: black;"/>
-                        <input type="password"  name="pass" id="pass" placeholder="Password" style="color: black;" required/>
-                        <input type="password"  name="re_pass" id="re_pass" placeholder="Repeat your password" style="color: black;" required/>
-                        <input type="submit" name="signup" id="signup" class="btn btn-default" style="background: #FE980F; color: #FFFFFF; font-family: 'Roboto', sans-serif; width: 35%;" value="Register"/>
+                        <input type="text" name="name" id="name" placeholder="Your Name" style="color: black;"
+                            required />
+                        <input type="email" name="email" id="email" placeholder="Email Address" style="color: black;"
+                            required />
+                        <input type="number" maxlength="10" name="contact" id="contact" placeholder="Contact No"
+                            style="color: black;" />
+                        <input type="password" name="pass" id="pass" placeholder="Password" style="color: black;"
+                            required />
+                        <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"
+                            style="color: black;" required />
+                        <button class="btn btn-default" type="submit" value="Submit"
+                            style="background: #FE980F; color: #FFFFFF; font-family: 'Roboto', sans-serif; width: 35%;">
+                            Sign Up
+                        </button>
                         <br>
                         <h5>Already have accounr? <a href="{% url 'user_app:login' %}">Login</a></h5>
                     </form>
                     {% if messagekey %}
-                        <script>alert("{{ messagekey }}")</script>
+                    <script>alert("{{ messagekey }}")</script>
                     {% endif %}
                 </div>
             </div>
