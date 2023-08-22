@@ -93,8 +93,8 @@
 									<div class="panel-body">
 										<ul>
 											{% for subcat in category.subcategory %}
-											<li><a href="#">{{subcat.subName}} </a></li>
-											{% endfor %}
+											<li><a href="{% url 'product_app:products' subcat.subslug %}">{{subcat.subName}} </a></li>
+											{% endfor %} 
 										</ul>
 									</div>
 								</div>
