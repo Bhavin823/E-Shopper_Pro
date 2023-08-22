@@ -95,7 +95,11 @@
 												<h2>₹{{product.ProductPrice}}</h2>
 												<p>{{product.ProductName}}</p>
 											</a>
-											<a href="addToCart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="{% url 'cart_app:add_to_cart' product.slug %}" class="btn btn-default add-to-cart">
+												<i class="fa fa-shopping-cart"></i> Add to cartt
+											</a>
+											
+											{% comment %} <a href="addToCart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a> {% endcomment %}
 										</div>
 									</div>
 								</div>
