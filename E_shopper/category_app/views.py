@@ -19,7 +19,7 @@ def Cat_Subcat_Nav_View():
         categoryDict={"cat_Id":category.pk,"catName":category.categoryName,"subcategory":subcategoryArray}
         
         categoryHeader.append(categoryDict)
-    print("category list:",categoryHeader)
+    # print("category list:",categoryHeader)
 
     return categoryHeader
 
