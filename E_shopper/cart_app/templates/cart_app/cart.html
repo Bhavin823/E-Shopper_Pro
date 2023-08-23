@@ -10,52 +10,72 @@
                 <li class="active">Shopping Cart</li>
                 </ol>
             </div>
-            {% if cart_items %}
                 <div class="table-responsive cart_info">
                     <table class="table table-condensed">
                         <thead>
                             <tr class="cart_menu">
                                 <td class="image">Item</td>
-                                <td class="description"></td>
+                                <td class="description">Name</td>
                                 <td class="price">Price</td>
                                 <td class="quantity">Quantity</td>
                                 <td class="total">Total</td>
-                                <td></td>
+                                <td class="total">
+                                    <a href="{% url 'cart_app:clear_cart' %}" style="color:white; text-align:right;" 
+                                            onmouseover="this.style.color='#333'"  
+                                            onmouseout="this.style.color='white'">
+                                        <i class="fa fa-trash-o"></i> Delete All
+                                    </a>
+                                </td>
                             </tr>
                         </thead>
                         <tbody>
-                        
-                            {% for cart_item in cart_items %}
-                            <tr>
-                                <td class="cart_product" style="margin:10px;">
-                                    <a href=""><img src="{{ cart_item.product.ProductImage.url }}" alt="{{ cart_item.product.ProductName }}" width="50"></a>
-                                </td>
-                                <td class="cart_description" style="white-space: normal;">
-                                    <h4><a href="">{{ cart_item.product.ProductName }}</a></h4>
-                                    {% comment %} <p>Web ID: 1089772</p> {% endcomment %}
-                                </td>
-                                <td class="cart_price">
-                                    <p>₹{{ cart_item.product.ProductPrice }}</p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <a class="cart_quantity_up" href=""> + </a>
-                                        <input class="cart_quantity_input" type="text" name="quantity" value="{{ cart_item.quantity }}" autocomplete="off" size="2">
-                                        <a class="cart_quantity_down" href=""> - </a>
-                                    </div>
-                                </td>
-                                <td class="cart_total">
-                                    <p class="cart_total_price">₹{{ cart_item.subtotal }}</p>
-                                </td>
-                                <td class="cart_delete" style="margin-right:2%;">
-                                    <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
-                            {% endfor %}
+                            {% if cart_items %}
+                                {% for cart_item in cart_items %}
+                                    <tr>
+                                        <td class="cart_product" style="margin:10px;">
+                                            <a href="{% url 'product_app:productdetail' cart_item.product.slug %}"><img src="{{ cart_item.product.ProductImage.url }}" alt="{{ cart_item.product.ProductName }}" width="50"></a>
+                                        </td>
+                                        <td class="cart_description" style="white-space: normal;">
+                                            <h4><a href="{% url 'product_app:productdetail' cart_item.product.slug %}">{{ cart_item.product.ProductName }}</a></h4>
+                                            {% comment %} <p>Web ID: 1089772</p> {% endcomment %}
+                                        </td>
+                                        <td class="cart_price">
+                                            <p>₹{{ cart_item.product.ProductPrice }}</p>
+                                        </td>
+                                        <td class="cart_quantity">
+                                            <div class="cart_quantity_button">
+                                                <a class="cart_quantity_up" href=""> + </a>
+                                                <input class="cart_quantity_input" type="text" name="quantity" value="{{ cart_item.quantity }}" autocomplete="off" size="2">
+                                                <a class="cart_quantity_down" href=""> - </a>
+                                            </div>
+                                        </td>
+                                        <td class="cart_total">
+                                            <p class="cart_total_price">₹{{ cart_item.subtotal }}</p>
+                                        </td>
+                                        <td class="cart_delete" style="margin-right:2%;">
+                                            <div style="display: flex; justify-content: center;">
+                                                <a class="cart_quantity_delete" href="{% url 'cart_app:delete_cart_item' cart_item.id %}"><i class="fa fa-times"></i></a>
+                                            </div>
+                                            {% comment %} <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a> {% endcomment %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding-top: 20px;">Your E-Shopper Cart is empty</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding-top: 10px;">
+                                        <a href="{% url 'home' %}" class="btn btn-default update" 
+                                        onmouseover="this.style.color='#333';"  
+                                        onmouseout="this.style.color='white';"
+                                        style="border-radius: 10px; padding:5px 24px 5px 24px;">Shop now</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
                         </tbody>
                     </table>
-                </div>
-            {% endif %}
+                </div>            
         </div>
     </section> 
     <!--/#cart_items-->

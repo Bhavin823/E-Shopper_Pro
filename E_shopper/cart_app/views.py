@@ -66,3 +66,28 @@ def cartView(request):
     }
 
     return render(request,'cart_app/cart.html',context)
+
+def delete_cart_item(request, item_id):
+    
+    try:
+        cart_item = CartItemModel.objects.get(id=item_id)
+        cart_item.delete()
+    except CartItemModel.DoesNotExist:
+        # Handle the case where the item doesn't exist
+        pass
+
+    # Find the cart item
+    # cart_item = CartItemModel.objects.get(id=item_id)
+    
+    # # Delete the cart item 
+    # cart_item.delete()
+
+    return redirect('cart_app:cart')
+
+def clear_cart(request):
+
+    # Delete all cart items for the current user
+    CartItemModel.objects.filter(user=request.user).delete()
+
+    # Redirect back to the cart
+    return redirect('cart_app:cart')
