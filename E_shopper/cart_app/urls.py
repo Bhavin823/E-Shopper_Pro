@@ -6,7 +6,7 @@ app_name = 'cart_app'
 
 urlpatterns = [
     # for add items in cart
-    path('add_to_cart/<slug:productdetailslug>',add_to_cart, name='add_to_cart'),
+    path('add_to_cart/<slug:productslug>',add_to_cart, name='add_to_cart'),
     # for cart page
     path('usercart', cartView, name='cart'),
     path('deleteitem/<int:item_id>', delete_cart_item, name='delete_cart_item'),

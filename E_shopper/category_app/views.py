@@ -31,13 +31,13 @@ def CategoryView():
     return categories
 
 # test subcategorypage
-def SubcategoryView(request,subcatslug):
-    categoryslug = get_object_or_404(CategoryModel, slug=subcatslug)  # fetch category slug  
+def SubcategoryView(request,catslug):
+    categoryslug = get_object_or_404(CategoryModel, slug=catslug)  # fetch category slug  
     subcatedata = SubCategoryModel.objects.filter(category=categoryslug)  # fetch subcategory which match with category
     
     cat_subcat_for_nav = Cat_Subcat_Nav_View() # for leftsidebar
 
-    catheadername = CategoryModel.objects.get(slug=subcatslug)  # for display categoryname on subcategory page
+    catheadername = CategoryModel.objects.get(slug=catslug)  # for display categoryname on subcategory page
     context = {
         'cat_sub_nav':cat_subcat_for_nav,
         'catheadername':catheadername,

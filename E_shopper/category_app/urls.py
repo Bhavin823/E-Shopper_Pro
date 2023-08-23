@@ -6,6 +6,6 @@ from category_app.views import *
 app_name = 'category_app'
 
 urlpatterns = [
-    path('subcat/<slug:subcatslug>', SubcategoryView, name='subcat'),
+    path('subcat/<slug:catslug>', SubcategoryView, name='subcat'),
     # ... other category app URL patterns ...
 ]

@@ -4,12 +4,12 @@ from category_app.models import SubCategoryModel
 from category_app.views import Cat_Subcat_Nav_View
 
 # Create your views here.
-def ProductView(request,productslug):
-    if productslug == 'all':
+def ProductView(request,subcatslug):
+    if subcatslug == 'all':
         products = ProductModel.objects.all() # fetch all products
         subcateheadername = "All Products" # Set subcategory name to "All Products"
     else:
-        subcategoryslug = get_object_or_404(SubCategoryModel, slug=productslug) #fetch slug of specified product
+        subcategoryslug = get_object_or_404(SubCategoryModel, slug=subcatslug) #fetch slug of specified product
         products  = ProductModel.objects.filter(subcategory=subcategoryslug) #fetcg those product which subcategort match
         subcateheadername = subcategoryslug.subcategoryName # Get the name of the subcategory
     
@@ -20,11 +20,12 @@ def ProductView(request,productslug):
         'cat_sub_nav' : cat_subcat_for_nav,
         'subcateheadername':subcateheadername,
         'products' : products,
+        'subcatslug':subcatslug
     }
     return render(request,'product_app/product.html',context)
 
-def ProductDetailView(request,productdetailslug):
-    productdetail = ProductModel.objects.get(slug=productdetailslug)  # fetch productdetail
+def ProductDetailView(request,productslug):
+    productdetail = ProductModel.objects.get(slug=productslug)  # fetch productdetail
     # print(productdetail)
     cat_subcat_for_nav = Cat_Subcat_Nav_View() #left sidebar
     context = {

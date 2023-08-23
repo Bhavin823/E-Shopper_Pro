@@ -9,9 +9,9 @@ from django.http import JsonResponse,HttpResponse
 # Create your views here.
 
 @login_required
-def add_to_cart(request,productdetailslug):
+def add_to_cart(request,productslug):
     user = request.user
-    product = ProductModel.objects.get(slug=productdetailslug)
+    product = ProductModel.objects.get(slug=productslug)
     print(product)
 
     # Find the user's cart or create a new one
@@ -35,13 +35,15 @@ def add_to_cart(request,productdetailslug):
         cart_item = CartItemModel.objects.create(user=user, product=product)
         cart.items.add(cart_item)
     
-    # subcategoryslug = get_object_or_404(SubCategoryModel, slug=productslug)
-    # subcategoryslug = get_object_or_404(SubCategoryModel, slug=productslug) #fetch slug of specified product
-    # products  = ProductModel.objects.filter(subcategory=subcategoryslug)
-    # product = ProductModel.objects.get(slug=productdetailslug)
-    # print(subcategoryslug)
-    # return redirect('product_app:products',productslug) 
-    return HttpResponse("add_to_cart")
+    subcatslug = request.GET.get('subcatslug', '')
+    # print("subcatslug",subcatslug)
+    
+    # if product add on cart from all product
+    if subcatslug == "all":
+        return redirect('product_app:products',subcatslug=subcatslug)
+    
+    return redirect('product_app:products',subcatslug=subcatslug) 
+    
 
 @login_required
 def cartView(request):
