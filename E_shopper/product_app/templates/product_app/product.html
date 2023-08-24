@@ -95,11 +95,24 @@
 												<h2>₹{{product.ProductPrice}}</h2>
 												<p>{{product.ProductName}}</p>
 											</a>
-											<a href="{% url 'cart_app:add_to_cart' product.slug %}?subcatslug={{ subcatslug }}" class="btn btn-default add-to-cart">
-												<i class="fa fa-shopping-cart"></i> Add to cartt
-											</a>
-											
-											{% comment %} <a href="addToCart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a> {% endcomment %}
+											{% if request.user.is_authenticated %}
+												{% if product.quantity_in_cart > 0 %}
+													<p>Available in cart: {{ product.quantity_in_cart }} units</p>
+													<a href="{% url 'cart_app:cart' %}" class="btn btn-default add-to-cart">
+														<i class="fa fa-shopping-cart"></i> Go to cart
+													</a>
+												{% else %}
+													<a href="{% url 'cart_app:add_to_cart' product.slug %}?subcatslug={{ subcatslug }}"
+													class="btn btn-default add-to-cart">
+														<i class="fa fa-shopping-cart"></i> Add to cart
+													</a>
+												{% endif %}
+											{% else %}
+												<a href="{% url 'user_app:login' %}"
+													class="btn btn-default add-to-cart">
+													<i class="fa fa-lock"></i> Login required to add to cart
+												</a>
+											{% endif %}
 										</div>
 									</div>
 								</div>

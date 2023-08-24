@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from product_app.models import ProductModel
 from category_app.models import SubCategoryModel
 from category_app.views import Cat_Subcat_Nav_View
+from cart_app.models import CartModel
 
 # Create your views here.
 def ProductView(request,subcatslug):
@@ -15,6 +16,13 @@ def ProductView(request,subcatslug):
     
     cat_subcat_for_nav = Cat_Subcat_Nav_View()  # left sidebar 
     print("products:",products)
+
+    if request.user.is_authenticated:
+        for product in products:
+            product.quantity_in_cart = 0  # Default value if not in cart
+            for item in request.user.cartmodel.items.all():
+                if item.product == product:
+                    product.quantity_in_cart = item.quantity
     
     context = {
         'cat_sub_nav' : cat_subcat_for_nav,
@@ -32,4 +40,4 @@ def ProductDetailView(request,productslug):
         'cat_sub_nav' : cat_subcat_for_nav,
         'productdetail': productdetail,
     }
-    return render(request,'product_app/productdetail.html',context)
+    return render(request,'product_app/protest.html',context)

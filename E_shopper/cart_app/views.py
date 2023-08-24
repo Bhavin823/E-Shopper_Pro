@@ -9,6 +9,7 @@ from django.http import JsonResponse,HttpResponse
 # Create your views here.
 
 @login_required
+# this function work for specified subcategory product page
 def add_to_cart(request,productslug):
     user = request.user
     product = ProductModel.objects.get(slug=productslug)
@@ -45,6 +46,7 @@ def add_to_cart(request,productslug):
     return redirect('product_app:products',subcatslug=subcatslug) 
     
 
+# show cart view with image,name,quantity ,subtotal
 @login_required
 def cartView(request):
     user = request.user
@@ -69,6 +71,7 @@ def cartView(request):
 
     return render(request,'cart_app/cart.html',context)
 
+# delete specified cart item
 def delete_cart_item(request, item_id):
     
     try:
@@ -86,6 +89,7 @@ def delete_cart_item(request, item_id):
 
     return redirect('cart_app:cart')
 
+# delte whole cart 
 def clear_cart(request):
 
     # Delete all cart items for the current user
