@@ -102,6 +102,7 @@
 														<i class="fa fa-shopping-cart"></i> Go to cart
 													</a>
 												{% else %}
+													
 													<a href="{% url 'cart_app:add_to_cart' product.slug %}?subcatslug={{ subcatslug }}"
 													class="btn btn-default add-to-cart">
 														<i class="fa fa-shopping-cart"></i> Add to cart

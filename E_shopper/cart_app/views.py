@@ -9,7 +9,7 @@ from django.http import JsonResponse,HttpResponse
 # Create your views here.
 
 @login_required
-# this function work for specified subcategory product page
+# this function work for specified subcategory product page,all product page,productdetail page
 def add_to_cart(request,productslug):
     user = request.user
     product = ProductModel.objects.get(slug=productslug)
@@ -42,7 +42,8 @@ def add_to_cart(request,productslug):
     # if product add on cart from all product
     if subcatslug == "all":
         return redirect('product_app:products',subcatslug=subcatslug)
-    
+    elif subcatslug == "productdetail":       
+        return redirect('product_app:productdetail',productslug=productslug)
     return redirect('product_app:products',subcatslug=subcatslug) 
     
 

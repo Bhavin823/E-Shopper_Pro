@@ -10,7 +10,12 @@ class CartItemModel(models.Model):
     def subtotal(self):
         return self.product.ProductPrice * self.quantity
     
+    def __str__(self) -> str:
+        return f"{self.user.username} Has {self.product.ProductName} With {self.quantity} Quantity"
+    
 class CartModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(CartItemModel)
     created_at = models.DateTimeField(auto_now_add=True)
+
+     

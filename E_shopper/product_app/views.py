@@ -35,7 +35,21 @@ def ProductView(request,subcatslug):
 def ProductDetailView(request,productslug):
     productdetail = ProductModel.objects.get(slug=productslug)  # fetch productdetail
     # print(productdetail)
+    
     cat_subcat_for_nav = Cat_Subcat_Nav_View() #left sidebar
+    
+    if request.user.is_authenticated:
+        productdetail.quantity_in_cart = 0
+        for item in request.user.cartmodel.items.all():
+            print("item:",item)
+            if item.product == productdetail:
+                print(f"product item= {item.product} == productdetal {productdetail}")
+                productdetail.quantity_in_cart = item.quantity
+                print(f"item's quantity = {item.quantity}")
+                
+    print("prodetail quantity:",productdetail.quantity_in_cart)
+
+    
     context = {
         'cat_sub_nav' : cat_subcat_for_nav,
         'productdetail': productdetail,

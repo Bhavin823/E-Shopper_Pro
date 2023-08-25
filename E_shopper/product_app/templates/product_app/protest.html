@@ -117,11 +117,29 @@
                             {% else %}
                                 <p><b>Brand:</b> {{productdetail.brandName}}</p>
                             {% endif %}
-                            <div class="btn1" style="display: inline;">
-                                    <button class="mainusbtn">-</button>
-                                    <button class="mainbtn" class="btn btn-default" class="fa fa-shopping-cart">ADD TO CART</button>
-                                    <button class="plusbtn">+</button>
-                            </div>
+                            {% if request.user.is_authenticated %}
+                                {% if productdetail.quantity_in_cart > 0 %}
+                                    <p>Available in cart: {{ productdetail.quantity_in_cart }} units</p>
+                                    <a href="{% url 'cart_app:cart' %}" class="btn btn-default add-to-cart">
+                                        <i class="fa fa-shopping-cart"></i> Go to cart
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'cart_app:add_to_cart' productdetail.slug %}?subcatslug=productdetail"
+                                    class="btn btn-default add-to-cart">
+                                        <i class="fa fa-shopping-cart"></i> Add to cart
+                                    </a>
+                                {% endif %}
+                                {% comment %} <div class="btn1" style="display: inline;">
+                                        <button class="mainusbtn">-</button>
+                                        <button class="mainbtn" class="btn btn-default" class="fa fa-shopping-cart">ADD TO CART</button>
+                                        <button class="plusbtn">+</button>
+                                </div> {% endcomment %}
+                            {% else %}
+                                <a href="{% url 'user_app:login' %}"
+                                    class="btn btn-default add-to-cart">
+                                    <i class="fa fa-lock"></i> Login required to add to cart
+                                </a>
+                            {% endif %}
                             {% comment %} <button type="button" class="btn btn-fefault cart" style="margin-left: 0px;">Buy Now</button> {% endcomment %}
                         </div>
                         <!--/product-information-->
