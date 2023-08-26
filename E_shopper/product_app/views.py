@@ -47,11 +47,10 @@ def ProductDetailView(request,productslug):
                 productdetail.quantity_in_cart = item.quantity
                 # print(f"item's quantity = {item.quantity}")
                 
-    # print("prodetail quantity:",productdetail.quantity_in_cart)
 
     
     context = {
         'cat_sub_nav' : cat_subcat_for_nav,
         'productdetail': productdetail,
     }
-    return render(request,'product_app/protest.html',context)
+    return render(request,'product_app/productdetail.html',context)

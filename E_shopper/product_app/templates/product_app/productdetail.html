@@ -96,19 +96,9 @@
                     <div class="col-sm-7">
                         <!--/product-information-->
                         <div class="product-information">
-                            <!-- <img src="images/product-details/new.jpg" class="newarrival" alt="" /> -->
                             <h2>{{productdetail.ProductName}}</h2>
-                            <!-- <p>Web ID: 1089772</p> -->
-                            <!-- <img src="images/product-details/rating.png" alt="" /> -->
                             <span>
                                 <span>₹{{productdetail.ProductPrice}}</span>
-                                <!-- <label>Quantity:</label> -->
-                                <!-- <input type="number" value="1" min= "0" id= "qty" name= "quantity" /> -->
-                                
-                                <!-- <button type="button" class="btn btn-fefault cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    Add to cart
-                                </button> -->
                             </span>
                             <p><b>Availability:</b> In Stock</p>
                             <p><b>Condition:</b> New</p>
@@ -117,12 +107,24 @@
                             {% else %}
                                 <p><b>Brand:</b> {{productdetail.brandName}}</p>
                             {% endif %}
-                            <div class="btn1" style="display: inline;">
-                                    <button class="mainusbtn">-</button>
-                                    <button class="mainbtn" class="btn btn-default" class="fa fa-shopping-cart">ADD TO CART</button>
-                                    <button class="plusbtn">+</button>
-                            </div>
-                            {% comment %} <button type="button" class="btn btn-fefault cart" style="margin-left: 0px;">Buy Now</button> {% endcomment %}
+                            {% if request.user.is_authenticated %}
+                                {% if productdetail.quantity_in_cart > 0 %}
+                                    <p>Available in cart: {{ productdetail.quantity_in_cart }} units</p>
+                                    <a href="{% url 'cart_app:cart' %}" class="btn btn-default add-to-cart">
+                                        <i class="fa fa-shopping-cart"></i> Go to cart
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'cart_app:add_to_cart' productdetail.slug %}?subcatslug=productdetail"
+                                    class="btn btn-default add-to-cart">
+                                        <i class="fa fa-shopping-cart"></i> Add to cart
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url 'user_app:login' %}?retpath=prodet&productslug={{ productdetail.slug }}"
+                                    class="btn btn-default add-to-cart">
+                                    <i class="fa fa-lock"></i> Login required to add to cart
+                                </a>
+                            {% endif %}
                         </div>
                         <!--/product-information-->
                         
@@ -289,67 +291,4 @@
 
 </section>
 <!--main content-->
-
-<style>
-    .btn1 {
-        width: 150px;
-        height: 40px;
-        padding-bottom: 20%;
-    }
-
-    .btn1 button {
-        background: #FE980F;
-        border: none;
-        /* border-radius: 8%; */
-        padding: 7px 12px;
-        font-size: 1.4rem;
-        color: white;
-        cursor: pointer;
-        outline: none;
-        
-    }
-
-    .plusbtn,
-    .mainusbtn {
-        display: none;
-        font-weight: 700;
-    }
-</style>
-
-
-
-<script>
-    let btn = document.querySelector('.mainbtn');
-    let pbtn = document.querySelector('.plusbtn');
-    let mbtn = document.querySelector('.mainusbtn');
-
-    btn.addEventListener("click", () => {
-        if (btn.innerText == 'ADD TO CART') {
-            btn.innerText = 1;
-            pbtn.style.display = 'inline-block';
-            mbtn.style.display = 'inline-block';
-        }
-    })
-
-    mbtn.addEventListener("click", () => {
-        if (btn.innerText == 5) {
-            pbtn.style.display = 'inline-block';
-        }
-        if (btn.innerText < 2) {
-            btn.innerText = 'ADD TO CART';
-            pbtn.style.display = 'none';
-            mbtn.style.display = 'none';
-        } else {
-            btn.innerText = btn.innerText - 1;
-        }
-    })
-
-    pbtn.addEventListener("click", () => {
-        btn.innerText = +(btn.innerText) + +1;
-
-        // if(btn.innerText == 5){
-        //     pbtn.style.display = 'none';
-        // }
-    })
-</script>
 {% endblock content %}	

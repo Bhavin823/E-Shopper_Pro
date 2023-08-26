@@ -8,8 +8,8 @@ from django.http import JsonResponse,HttpResponse
 
 # Create your views here.
 
-@login_required
 # this function work for specified subcategory product page,all product page,productdetail page
+@login_required
 def add_to_cart(request,productslug):
     user = request.user
     product = ProductModel.objects.get(slug=productslug)
@@ -29,10 +29,7 @@ def add_to_cart(request,productslug):
         cart_item_exist = False
 
     # If the cart item exists, increase its quantity; otherwise, create it
-    if cart_item_exist:
-        cart_item.quantity += 1
-        cart_item.save()
-    else:
+    if not cart_item_exist:
         cart_item = CartItemModel.objects.create(user=user, product=product)
         cart.items.add(cart_item)
     
@@ -44,8 +41,6 @@ def add_to_cart(request,productslug):
         return redirect('product_app:products',subcatslug=subcatslug)
     elif subcatslug == "productdetail":       
         return redirect('product_app:productdetail',productslug=productslug)
-    return redirect('product_app:products',subcatslug=subcatslug) 
-    
 
 # show cart view with image,name,quantity ,subtotal
 @login_required
@@ -74,19 +69,12 @@ def cartView(request):
 
 # delete specified cart item
 def delete_cart_item(request, item_id):
-    
     try:
         cart_item = CartItemModel.objects.get(id=item_id)
         cart_item.delete()
     except CartItemModel.DoesNotExist:
         # Handle the case where the item doesn't exist
         pass
-
-    # Find the cart item
-    # cart_item = CartItemModel.objects.get(id=item_id)
-    
-    # # Delete the cart item 
-    # cart_item.delete()
 
     return redirect('cart_app:cart')
 
@@ -97,4 +85,25 @@ def clear_cart(request):
     CartItemModel.objects.filter(user=request.user).delete()
 
     # Redirect back to the cart
+    return redirect('cart_app:cart')
+
+@login_required
+def increment_cart_quantity(request,item_id):
+    try:
+        cart_item = CartItemModel.objects.get(id=item_id,user=request.user)
+        cart_item.quantity +=1
+        cart_item.save()
+    except CartItemModel.DoesNotExist:
+        pass
+    return redirect('cart_app:cart')
+
+@login_required
+def decrement_cart_quantity(request, item_id):
+    try:
+        cart_item = CartItemModel.objects.get(id=item_id, user=request.user)
+        if cart_item.quantity > 1:
+            cart_item.quantity -= 1
+            cart_item.save()
+    except CartItemModel.DoesNotExist:
+        pass
     return redirect('cart_app:cart')
