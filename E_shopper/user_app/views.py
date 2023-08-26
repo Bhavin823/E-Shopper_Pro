@@ -67,7 +67,6 @@ def handleLogin(request):
         subcatslug = request.POST.get('subcatslug', '')
         productslug = request.POST.get('productslug', '')
 
-        
         # print("repath:",retpath)
         # print("subcatslug:",subcatslug)
         # print('productslug',productslug)
@@ -97,3 +96,10 @@ def logouthandle(request):
     logout(request)
     print("logout")
     return redirect('home')
+
+def profileView(request):
+    userprofile = request.user.userprofile
+    context = {
+        'userprofile':userprofile
+    }
+    return render(request,'user_app/profile.html',context)

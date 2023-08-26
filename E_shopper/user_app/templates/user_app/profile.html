@@ -1,0 +1,536 @@
+{% extends 'base_app/base.html' %}
+{% load static %}
+{% block content %}
+	<!--main content-->
+	<section>
+		<div class="container">
+			<div class="row">
+                <!--left part-->
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+					<!--Profile Navbar-->
+						<div class="panel-group category-products" id="accordian">
+							<div class=row>
+                                <div class="col-sm-5" style="padding-left: 30px;">
+                                    <div class="view-product">
+                                        <img src="{% static 'images/404/profile_avatar1.jpg' %}" alt="" style="display: block;
+                                         width: 100%;border-radius: 50%; height:80px; aspect-ratio: 1/1;" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-7" style="padding:10px;">
+                                    <h6>Hello</h6>
+                                    <h4>{{ userprofile.user.username }}</h4>
+                                </div>
+                            </div>
+                        </div>
+						
+						<!--/category-products-->
+					
+						<!--brands_products-->
+						<div class="brands_products">
+							{% comment %} <h2>Brands</h2> {% endcomment %}
+							<div class="brands-name">
+								<div class=row>
+                                    <div class="col-sm-3" style="padding-left: 30px;">
+                                        <div class="view-product">
+                                            <i class="fa fa-user" style="font-size: x-large; color:#FE980f"></i> 
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9" style="padding:0px;">
+                                        <h5 style="font-size:medium; margin-top:5px; color:#878787;">ACCOUNT SETTING</h5>
+                                    </div>
+                                </div>
+                                <hr style="margin-top:4px;">
+                                <div class=row>
+                                    <div class="col-sm-3" style="padding-left: 30px;">
+
+                                    </div>
+                                    <div class="col-sm-9" style="padding:0px;">
+                                        <h5 style="font-size:medium; margin-top:5px; color:#878787;">MY ORDERS</h5>
+                                    </div>
+                                </div>
+                                <div class=row>
+                                    <div class="col-sm-3" style="padding-left: 30px;">
+
+                                    </div>
+                                    <div class="col-sm-9" style="padding:0px;">
+                                        <h5 style="font-size:medium; margin-top:5px; color:#878787;">Profile Information</h5>
+                                    </div>
+                                </div>
+                                <div class=row>
+                                    <div class="col-sm-3" style="padding-left: 30px;">
+                                    </div>
+                                    <div class="col-sm-9" style="padding:0px;">
+                                        <h5 style="font-size:medium; margin-top:5px; color:#878787;">Addresses</h5>
+                                    </div>
+                                </div>
+                                <hr style="margin-top:10px;">
+                                <div class=row>
+                                    <div class="col-sm-3" style="padding-left: 30px;">
+                                        <div class="view-product">
+                                            {% comment %} <i class="fa fa-user" style="font-size: x-large;"></i>  {% endcomment %}
+                                            <svg width="26" height="26" class="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill="#ffa500" stroke-width="0.3" stroke="#ffa500" 
+                                                d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"></path></svg>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9" style="padding:0px;">
+                                        <h5 style="margin-top:4px;"><a href="#" style="font-size:medium; margin-top:4px; color:#878787; padding-left:0px;">Logout</a></h5>
+                                    </div>
+                                </div>
+
+                            </div>
+						</div>
+						<!--/brands_products-->
+						
+						{% comment %} <!--price-range-->
+						<div class="price-range">
+							<h2>Price Range</h2>
+							<div class="well text-center">
+								 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+								 <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+							</div>
+						</div>
+						<!--/price-range--> {% endcomment %}
+						
+						<!--shipping-->
+						<div class="shipping text-center">
+							<img src="{% static 'images/home/shipping.jpg' %}" alt="" />
+						</div>
+						<!--/shipping-->
+					
+					</div>
+				</div>
+				<!--left part-->
+
+				<!--right part-->
+				<div class="col-sm-9 padding-right">
+
+					<!--features_Category-->
+					<div class="features_items">
+						{% for category in categories %}
+							<div class="col-sm-4">
+								<a href="{% url 'category_app:subcat' category.slug %}">
+									<div class="product-image-wrapper" style="border:1px solid #ddd ;">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												{% if category.categoryImage %}
+												<img src="{{ category.categoryImage.url }}" alt="{{ category.categoryName }}"
+												style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom:1px solid #ddd;" />
+												{% else %}
+												<img src="#" alt="{{category.categoryName}} image" 
+												style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom:1px solid #ddd;" />
+												{% endif %}
+												<h2>{{category.categoryName}}</h2>
+												<p>{{category.slug}}</p>
+												<!-- <a href="#" class="btn btn-default add-to-cart"><i
+														class="fa fa-shopping-cart"></i>Add to cart</a> -->
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+					<!--features_items-->
+					
+					<!--category-tab-->
+					<div class="category-tab">
+						<div class="col-sm-12">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
+								<li><a href="#blazers" data-toggle="tab">Blazers</a></li>
+								<li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
+								<li><a href="#kids" data-toggle="tab">Kids</a></li>
+								<li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>
+							</ul>
+						</div>
+						<div class="tab-content">
+							<div class="tab-pane fade active in" id="tshirt" >
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery1.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery2.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery3.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery4.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="tab-pane fade" id="blazers" >
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery4.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery3.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery2.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery1.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="tab-pane fade" id="sunglass" >
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery3.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery4.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery1.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery2.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="tab-pane fade" id="kids" >
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery1.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery2.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery3.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery4.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="tab-pane fade" id="poloshirt" >
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery2.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery4.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery3.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{% static 'images/home/gallery1.jpg' %}" alt="" />
+												<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>
+												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--/category-tab-->
+					
+					<!--recommended_items-->
+					<div class="recommended_items">
+						<h2 class="title text-center">recommended items</h2>
+						
+						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+								<div class="item active">	
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="{% static 'images/home/recommend1.jpg' %}" alt="" />
+													<h2>$56</h2>
+													<p>Easy Polo Black Edition</p>
+													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="{% static 'images/home/recommend2.jpg' %}" alt="" />
+													<h2>$56</h2>
+													<p>Easy Polo Black Edition</p>
+													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="{% static 'images/home/recommend3.jpg' %}" alt="" />
+													<h2>$56</h2>
+													<p>Easy Polo Black Edition</p>
+													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">	
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="{% static 'images/home/recommend1.jpg' %}" alt="" />
+													<h2>$56</h2>
+													<p>Easy Polo Black Edition</p>
+													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="{% static 'images/home/recommend2.jpg' %}" alt="" />
+													<h2>$56</h2>
+													<p>Easy Polo Black Edition</p>
+													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="{% static 'images/home/recommend3.jpg' %}" alt="" />
+													<h2>$56</h2>
+													<p>Easy Polo Black Edition</p>
+													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+								<i class="fa fa-angle-left"></i>
+							  </a>
+							  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							  </a>			
+						</div>
+					</div>
+					<!--/recommended_items-->
+					
+					<div>
+						
+					</div>
+				</div>
+				<!--right part-->
+			
+			</div>
+		</div>
+	</section>
+	<!--main content-->
+{% endblock content %}

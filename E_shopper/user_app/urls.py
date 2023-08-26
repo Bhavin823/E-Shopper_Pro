@@ -15,6 +15,9 @@ urlpatterns = [
     path('loginhandle', handleLogin, name='loginhandle'),
 
     # logout handle
-    path('logouthandle',logouthandle, name='logouthandle')
+    path('logouthandle',logouthandle, name='logouthandle'),
+
+    # profile 
+    path('profile',profileView,name='profile'),
 
 ]
