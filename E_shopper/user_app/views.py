@@ -46,10 +46,32 @@ def handelSignup(request):
 
 
 def loginView(request):
-    return render(request,'user_app/login.html')
+    # fetch detail from post page for return after login
+    retpath = request.GET.get('retpath', '')
+    subcatslug = request.GET.get('subcatslug', '')
+    productslug = request.GET.get('productslug', '')
+    # print(retpath)
+    # print(subcatslug)
+    # print(productslug)
+    context={
+        'retpath':retpath,
+        'subcateslug':subcatslug,
+        'productslug':productslug,
+    }
+    return render(request,'user_app/login.html',context)
 
 def handleLogin(request):
     if request.method == "POST":
+        # retrive from login form
+        retpath = request.POST.get('retpath', '')
+        subcatslug = request.POST.get('subcatslug', '')
+        productslug = request.POST.get('productslug', '')
+
+        
+        # print("repath:",retpath)
+        # print("subcatslug:",subcatslug)
+        # print('productslug',productslug)
+
         loginusername = request.POST['loginusername']
         loginpassword = request.POST['loginpass']
 
@@ -59,6 +81,11 @@ def handleLogin(request):
             # If the user is authenticated, log them in and redirect to the home page
             login(request,user)
             print('login successfully')
+            # check in url and then redirect to return page
+            if retpath == "prolog":
+                return redirect('product_app:products',subcatslug=subcatslug)
+            elif retpath == 'prodet':
+                return redirect('product_app:productdetail',productslug=productslug)
             return redirect('home')
         else:
             # If authentication fails, render the login page with an error message

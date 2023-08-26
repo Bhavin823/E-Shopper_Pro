@@ -15,7 +15,7 @@ def ProductView(request,subcatslug):
         subcateheadername = subcategoryslug.subcategoryName # Get the name of the subcategory
     
     cat_subcat_for_nav = Cat_Subcat_Nav_View()  # left sidebar 
-    print("products:",products)
+    # print("products:",products)
 
     if request.user.is_authenticated:
         for product in products:
@@ -41,13 +41,13 @@ def ProductDetailView(request,productslug):
     if request.user.is_authenticated:
         productdetail.quantity_in_cart = 0
         for item in request.user.cartmodel.items.all():
-            print("item:",item)
+            # print("item:",item)
             if item.product == productdetail:
-                print(f"product item= {item.product} == productdetal {productdetail}")
+                # print(f"product item= {item.product} == productdetal {productdetail}")
                 productdetail.quantity_in_cart = item.quantity
-                print(f"item's quantity = {item.quantity}")
+                # print(f"item's quantity = {item.quantity}")
                 
-    print("prodetail quantity:",productdetail.quantity_in_cart)
+    # print("prodetail quantity:",productdetail.quantity_in_cart)
 
     
     context = {

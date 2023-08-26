@@ -79,46 +79,47 @@
 					<!--features_products-->
 					<div class="features_items">
 						<h2 class="title text-center">{{subcateheadername}}</h2>
-						{% for product in products%}
-							<div class="col-sm-4">
-								<div class="product-image-wrapper" style="border:1px solid #ddd ;">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<a href="{% url 'product_app:productdetail' product.slug %}">	
-												{% if product.ProductImage %}
-													<img src="{{ product.ProductImage.url }}" alt="{{ product.ProductName }}"
-													style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom: 1px solid #ddd;" />
-												{% else %}
-													<img src="#" alt="{{product.ProductName}} image" 
-													style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom: 1px solid #ddd;" />
-												{% endif %}
-												<h2>₹{{product.ProductPrice}}</h2>
-												<p>{{product.ProductName}}</p>
-											</a>
-											{% if request.user.is_authenticated %}
-												{% if product.quantity_in_cart > 0 %}
-													<p>Available in cart: {{ product.quantity_in_cart }} units</p>
-													<a href="{% url 'cart_app:cart' %}" class="btn btn-default add-to-cart">
-														<i class="fa fa-shopping-cart"></i> Go to cart
-													</a>
-												{% else %}
-													
-													<a href="{% url 'cart_app:add_to_cart' product.slug %}?subcatslug={{ subcatslug }}"
-													class="btn btn-default add-to-cart">
-														<i class="fa fa-shopping-cart"></i> Add to cart
-													</a>
-												{% endif %}
-											{% else %}
-												<a href="{% url 'user_app:login' %}"
-													class="btn btn-default add-to-cart">
-													<i class="fa fa-lock"></i> Login required to add to cart
+						<div class="product-container" style="display:flex; flex-wrap:wrap;">
+							{% for product in products%}
+								<div class="col-sm-4">
+									<div class="product-image-wrapper" style="border:1px solid #ddd ;">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<a href="{% url 'product_app:productdetail' product.slug %}">	
+													{% if product.ProductImage %}
+														<img src="{{ product.ProductImage.url }}" alt="{{ product.ProductName }}"
+														style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom: 1px solid #ddd;" />
+													{% else %}
+														<img src="#" alt="{{product.ProductName}} image" 
+														style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom: 1px solid #ddd;" />
+													{% endif %}
+													<h2>₹{{product.ProductPrice}}</h2>
+													<p>{{product.ProductName}}</p>
 												</a>
-											{% endif %}
+												{% if request.user.is_authenticated %}
+													{% if product.quantity_in_cart > 0 %}
+														<p>Available in cart: {{ product.quantity_in_cart }} units</p>
+														<a href="{% url 'cart_app:cart' %}" class="btn btn-default add-to-cart">
+															<i class="fa fa-shopping-cart"></i> Go to cart
+														</a>
+													{% else %}
+														<a href="{% url 'cart_app:add_to_cart' product.slug %}?subcatslug={{ subcatslug }}"
+														class="btn btn-default add-to-cart">
+															<i class="fa fa-shopping-cart"></i> Add to cart
+														</a>
+													{% endif %}
+												{% else %}
+													<a href="{% url 'user_app:login' %}?retpath=prolog&subcatslug={{ subcatslug }}"
+														class="btn btn-default add-to-cart">
+														<i class="fa fa-lock"></i> Login required to add to cart
+													</a>
+												{% endif %}
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						{% endfor %}
+							{% endfor %}
+						</div>
 					</div>
 					<!--features_items-->
 					

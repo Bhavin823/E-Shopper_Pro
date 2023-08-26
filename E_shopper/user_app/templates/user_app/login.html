@@ -13,6 +13,10 @@
                     <h2>Login to your account</h2>
                     <form method="post" action="{% url 'user_app:loginhandle' %}">
                         {% csrf_token %}
+                        <input type="hidden" name="retpath" value="{{ retpath }}">
+                        <input type="hidden" name="subcatslug" value="{{ subcateslug }}">
+                        <input type="hidden" name="productslug" value="{{ productslug }}">
+                        
                         <input type="text" name="loginusername" id="loginusername" placeholder="Username" style="color: black;"/>
                         <input type="password" name="loginpass" id="loginpass" placeholder="Password" />
                         <span>

@@ -13,7 +13,7 @@ from django.http import JsonResponse,HttpResponse
 def add_to_cart(request,productslug):
     user = request.user
     product = ProductModel.objects.get(slug=productslug)
-    print(product)
+    # print(product)
 
     # Find the user's cart or create a new one
     try:

@@ -135,7 +135,7 @@
                                         <button class="plusbtn">+</button>
                                 </div> {% endcomment %}
                             {% else %}
-                                <a href="{% url 'user_app:login' %}"
+                                <a href="{% url 'user_app:login' %}?retpath=prodet&productslug={{ productdetail.slug }}"
                                     class="btn btn-default add-to-cart">
                                     <i class="fa fa-lock"></i> Login required to add to cart
                                 </a>
