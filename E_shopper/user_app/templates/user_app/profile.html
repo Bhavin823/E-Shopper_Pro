@@ -24,11 +24,10 @@
                             </div>
                         </div>
 						
-						<!--/category-products-->
+						
 					
-						<!--brands_products-->
+						<!-- Account Setting -->
 						<div class="brands_products">
-							{% comment %} <h2>Brands</h2> {% endcomment %}
 							<div class="brands-name">
 								<div class=row>
                                     <div class="col-sm-3" style="padding-left: 30px;">
@@ -46,7 +45,7 @@
 
                                     </div>
                                     <div class="col-sm-9" style="padding:0px;">
-                                        <h5 style="font-size:medium; margin-top:5px; color:#878787;">MY ORDERS</h5>
+                                        <h4 style="margin-top:4px;"><a href="#MY_ORDERS" style="font-size:medium; margin-top:5px; color:#878787;">MY ORDERS</a></h4>
                                     </div>
                                 </div>
                                 <div class=row>
@@ -54,14 +53,14 @@
 
                                     </div>
                                     <div class="col-sm-9" style="padding:0px;">
-                                        <h5 style="font-size:medium; margin-top:5px; color:#878787;">Profile Information</h5>
+                                        <h4 style="margin-top:4px;"><a  href="#Profile_information" style="font-size:medium; margin-top:5px; color:#878787;">Profile Information</a></h4>
                                     </div>
                                 </div>
                                 <div class=row>
                                     <div class="col-sm-3" style="padding-left: 30px;">
                                     </div>
                                     <div class="col-sm-9" style="padding:0px;">
-                                        <h5 style="font-size:medium; margin-top:5px; color:#878787;">Addresses</h5>
+                                        <h4 style="margin-top:4px;"><a href="#Addresses" style="font-size:medium; margin-top:5px; color:#878787;">Addresses</a></h4>
                                     </div>
                                 </div>
                                 <hr style="margin-top:10px;">
@@ -75,29 +74,22 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-9" style="padding:0px;">
-                                        <h5 style="margin-top:4px;"><a href="#" style="font-size:medium; margin-top:4px; color:#878787; padding-left:0px;">Logout</a></h5>
+                                        <h5 style="margin-top:4px;"><a href="{% url 'user_app:logouthandle' %}" 
+											style="font-size:medium; margin-top:4px; color:#878787; padding-left:0px;">
+											Logout</a></h5>
                                     </div>
                                 </div>
 
                             </div>
 						</div>
-						<!--/brands_products-->
+						<!-- Account Setting -->
+					
 						
-						{% comment %} <!--price-range-->
-						<div class="price-range">
-							<h2>Price Range</h2>
-							<div class="well text-center">
-								 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
-								 <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
-							</div>
-						</div>
-						<!--/price-range--> {% endcomment %}
-						
-						<!--shipping-->
+						<!-- Ads -->
 						<div class="shipping text-center">
 							<img src="{% static 'images/home/shipping.jpg' %}" alt="" />
 						</div>
-						<!--/shipping-->
+						<!-- Ads -->
 					
 					</div>
 				</div>
@@ -105,426 +97,79 @@
 
 				<!--right part-->
 				<div class="col-sm-9 padding-right">
-
-					<!--features_Category-->
-					<div class="features_items">
-						{% for category in categories %}
-							<div class="col-sm-4">
-								<a href="{% url 'category_app:subcat' category.slug %}">
-									<div class="product-image-wrapper" style="border:1px solid #ddd ;">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												{% if category.categoryImage %}
-												<img src="{{ category.categoryImage.url }}" alt="{{ category.categoryName }}"
-												style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom:1px solid #ddd;" />
-												{% else %}
-												<img src="#" alt="{{category.categoryName}} image" 
-												style="display: block; width: 100%; aspect-ratio: 1/1; border-bottom:1px solid #ddd;" />
-												{% endif %}
-												<h2>{{category.categoryName}}</h2>
-												<p>{{category.slug}}</p>
-												<!-- <a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a> -->
+					<div class="left-sidebar">
+						<div class="panel-group category-products" id="accordian">
+							<div class="row" style="padding: 0px 0px 10px 0px;">
+								<h4 style="padding-left: 4%; display: inline;">Personal Information</h4>
+								<a id="editLink" style="color: #ffa500; padding: 0px 10px; text-decoration: none; cursor: pointer; transition: color 0.3s;" onclick="toggleEditMode()">Edit</a>
+							</div>
+							<div class="row" style="padding-left: 4%;">
+								<div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 15px;">
+									<div style="width: 29%;">
+										<div style="margin-bottom: 15px;">
+											<div style="display: flex; flex-direction: column; position: relative;">
+												<div style="position: relative;">
+													<label for="firstName" id="firstNameLabel" style="font-size: 12px; color: #878787; font-weight: 500; position: absolute; top: 2px; left: 8px; background-color: white; padding: 4px 10px; display: none;">First Name</label>
+													<input id="firstNameInput" type="text" style=" cursor: not-allowed; padding: 14px 0px 14px 20px; border: 1px solid #ccc; border-radius: 4px; transition: border-color 0.3s; width: 100%;" name="firstName" required="" autocomplete="name" tabindex="1" value="{{ userprofile.user.username|capfirst }}" onmouseover="this.style.borderColor='#ffa500'" onmouseout="this.style.borderColor='#ccc'" disabled>
+												</div>
 											</div>
 										</div>
 									</div>
-								</a>
+									<div style="width: 29%;">
+										<div style="margin-bottom: 15px;">
+											<div style="display: flex; flex-direction: column; position: relative;">
+												<div style="position: relative;">
+													<label for="lastName" id="lastNameLabel" style="font-size: 12px; color: #878787; font-weight: 500; position: absolute; top: 2px; left: 8px; background-color: white; padding: 4px 10px; display: none;">Last Name</label>
+													<input id="lastNameInput" type="text" style=" cursor: not-allowed; padding: 14px 0px 14px 20px; border: 1px solid #ccc; border-radius: 4px; transition: border-color 0.3s; width: 100%;" name="lastName" required="" autocomplete="name" tabindex="2" value="Doe" onmouseover="this.style.borderColor='#ffa500'" onmouseout="this.style.borderColor='#ccc'" disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div style="width: 38%;">
+										<div style="display: flex; align-items: center; justify-content: center;">
+											<button id="updateButton" style="background-color: #ffa500; border: none; color: white; padding: 14px 20px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; display: none;" onmouseover="this.style.backgroundColor='#ff8a00'" onmouseout="this.style.backgroundColor='#ffa500'">Update</button>
+										</div>
+									</div>
+								</div>
 							</div>
-						{% endfor %}
-					</div>
-					<!--features_items-->
-					
-					<!--category-tab-->
-					<div class="category-tab">
-						<div class="col-sm-12">
-							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
-								<li><a href="#blazers" data-toggle="tab">Blazers</a></li>
-								<li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
-								<li><a href="#kids" data-toggle="tab">Kids</a></li>
-								<li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>
-							</ul>
+							
+							<script>
+								function toggleEditMode() {
+									const firstNameInput = document.getElementById('firstNameInput');
+									const lastNameInput = document.getElementById('lastNameInput');
+									const firstNameLabel = document.getElementById('firstNameLabel');
+									const lastNameLabel = document.getElementById('lastNameLabel');
+									const editLink = document.getElementById('editLink');
+									const updateButton = document.getElementById('updateButton');
+									
+									if (editLink.textContent === 'Edit') {
+										editLink.textContent = 'Cancel';
+										firstNameInput.removeAttribute('disabled');
+										lastNameInput.removeAttribute('disabled');
+										firstNameLabel.style.display = 'block';
+										lastNameLabel.style.display = 'block';
+										firstNameInput.style.padding = '25px 0px 3px 20px';
+										lastNameInput.style.padding = '25px 0px 3px 20px';
+										firstNameInput.style.cursor = 'auto';
+            							lastNameInput.style.cursor = 'auto';
+										updateButton.style.display = 'block';
+									} else {
+										editLink.textContent = 'Edit';
+										firstNameInput.setAttribute('disabled', true);
+										lastNameInput.setAttribute('disabled', true);
+										firstNameLabel.style.display = 'none';
+										lastNameLabel.style.display = 'none';
+										firstNameInput.style.padding = '14px 0px 14px 20px';
+										lastNameInput.style.padding = '14px 0px 14px 20px';
+										firstNameInput.style.cursor = 'not-allowed';
+            							lastNameInput.style.cursor = 'not-allowed';
+										updateButton.style.display = 'none';
+									}
+								}
+							</script>
+							
+								
 						</div>
-						<div class="tab-content">
-							<div class="tab-pane fade active in" id="tshirt" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery1.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery2.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery3.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery4.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="tab-pane fade" id="blazers" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery4.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery3.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery2.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery1.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="tab-pane fade" id="sunglass" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery3.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery4.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery1.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery2.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="tab-pane fade" id="kids" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery1.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery2.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery3.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery4.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="tab-pane fade" id="poloshirt" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery2.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery4.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery3.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery1.jpg' %}" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--/category-tab-->
-					
-					<!--recommended_items-->
-					<div class="recommended_items">
-						<h2 class="title text-center">recommended items</h2>
-						
-						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-							<div class="carousel-inner">
-								<div class="item active">	
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{% static 'images/home/recommend1.jpg' %}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{% static 'images/home/recommend2.jpg' %}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{% static 'images/home/recommend3.jpg' %}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="item">	
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{% static 'images/home/recommend1.jpg' %}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{% static 'images/home/recommend2.jpg' %}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{% static 'images/home/recommend3.jpg' %}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-								<i class="fa fa-angle-left"></i>
-							  </a>
-							  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-								<i class="fa fa-angle-right"></i>
-							  </a>			
-						</div>
-					</div>
-					<!--/recommended_items-->
-					
-					<div>
-						
 					</div>
 				</div>
 				<!--right part-->
