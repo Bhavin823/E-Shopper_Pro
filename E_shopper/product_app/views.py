@@ -46,9 +46,6 @@ def ProductDetailView(request,productslug):
                 # print(f"product item= {item.product} == productdetal {productdetail}")
                 productdetail.quantity_in_cart = item.quantity
                 # print(f"item's quantity = {item.quantity}")
-                
-
-    
     context = {
         'cat_sub_nav' : cat_subcat_for_nav,
         'productdetail': productdetail,

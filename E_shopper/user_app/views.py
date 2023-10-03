@@ -98,8 +98,24 @@ def logouthandle(request):
     return redirect('home')
 
 def profileView(request):
-    userprofile = request.user.userprofile
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        user_profile.firstname = request.POST.get('firstname')
+        user_profile.lastname = request.POST.get('lastname')
+        user_profile.contact = request.POST.get('contact')
+        user_profile.gender = request.POST.get('gender')
+        user_profile.save()
+
+    print(user_profile.user.username)
+    print(user_profile.user.email)
+    print(user_profile.contact)
+    print(user_profile.gender)
+    print(user_profile.firstname)
+    print(user_profile.lastname)
+    
+
     context = {
-        'userprofile':userprofile
+        'user_profile': user_profile
     }
     return render(request,'user_app/profile.html',context)

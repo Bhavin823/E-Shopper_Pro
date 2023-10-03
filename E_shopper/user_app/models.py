@@ -6,6 +6,12 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     contact = models.CharField(max_length=10)
-    
+    firstname = models.CharField(max_length=100, blank=True)
+    lastname = models.CharField(max_length=100, blank=True)
+    GENER_CHOICE  = (
+        ('M','Male'),
+        ('F','Female'),
+    )
+    gender = models.CharField(max_length=1,choices=GENER_CHOICE, blank=True)
     
     

@@ -41,6 +41,8 @@ def add_to_cart(request,productslug):
         return redirect('product_app:products',subcatslug=subcatslug)
     elif subcatslug == "productdetail":       
         return redirect('product_app:productdetail',productslug=productslug)
+    else:
+        return redirect('product_app:products',subcatslug=subcatslug)
 
 # show cart view with image,name,quantity ,subtotal
 @login_required
