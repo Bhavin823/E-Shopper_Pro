@@ -36,12 +36,17 @@ def add_to_cart(request,productslug):
     subcatslug = request.GET.get('subcatslug', '')
     # print("subcatslug",subcatslug)
     
-    # if product add on cart from all product
+    # if product add on cart from all product page
     if subcatslug == "all":
+        # redirect to all product page after add product to cart
         return redirect('product_app:products',subcatslug=subcatslug)
+    # if product add on cart from productdetail page
     elif subcatslug == "productdetail":       
+        # redirect to productdetail page after add product to cart
         return redirect('product_app:productdetail',productslug=productslug)
+    # if product add on cart from subcategory wise product page
     else:
+        # redirect to subcategory wise product page after add product to cart
         return redirect('product_app:products',subcatslug=subcatslug)
 
 # show cart view with image,name,quantity ,subtotal
