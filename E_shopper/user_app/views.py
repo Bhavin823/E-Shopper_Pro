@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login ,logout
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import JsonResponse,HttpResponse
 from user_app.models import UserProfile
@@ -119,3 +120,49 @@ def profileView(request):
         'user_profile': user_profile
     }
     return render(request,'user_app/profile.html',context)
+
+@login_required
+def update_personal_info(request):
+    user_profile =  UserProfile.objects.get(user=request.user) 
+
+    # Update the user's first name, last name, and gender
+    if request.method == 'POST':
+        user_profile.firstname = request.POST.get('firstname')
+        print("update",user_profile.firstname)
+        user_profile.lastname = request.POST.get('lastname')
+        print("update",user_profile.firstname)
+        user_profile.gender = request.POST.get('gender')
+        print("update",user_profile.gender)
+        
+        # Save the updated profile
+        user_profile.save()
+    return redirect('user_app:profile')
+
+@login_required
+def update_email(request):
+
+    # Update the user's email
+    if request.method == 'POST':
+        new_email = request.POST.get('email')
+        print("new_email: ",new_email)
+        user = request.user
+        user.email = new_email
+        print("database email:",user.email)
+        # Save the updated email
+        user.save()
+    
+    return redirect('user_app:profile')
+
+@login_required
+def update_contact(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    # Update the user's contact
+    if request.method == 'POST':
+        user_profile.contact = request.POST.get('mobileNumber')
+        print("update contact: ",user_profile.contact)
+
+        # Save the user contact
+        user_profile.save()
+    
+    return redirect('user_app:profile')

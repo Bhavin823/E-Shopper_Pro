@@ -8,10 +8,10 @@ class UserProfile(models.Model):
     contact = models.CharField(max_length=10)
     firstname = models.CharField(max_length=100, blank=True)
     lastname = models.CharField(max_length=100, blank=True)
-    GENER_CHOICE  = (
+    GENDER_CHOICE  = (
         ('M','Male'),
         ('F','Female'),
     )
-    gender = models.CharField(max_length=1,choices=GENER_CHOICE, blank=True)
+    gender = models.CharField(max_length=1,choices=GENDER_CHOICE, blank=True)
     
     

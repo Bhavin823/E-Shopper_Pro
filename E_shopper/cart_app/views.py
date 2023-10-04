@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from product_app.models import ProductModel
 from cart_app.models import CartItemModel,CartModel
 from category_app.models import SubCategoryModel
-from django.http import JsonResponse,HttpResponse
+from django.http import JsonResponse,HttpResponse 
 
 
 # Create your views here.

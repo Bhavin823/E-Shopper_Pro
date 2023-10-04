@@ -17,7 +17,15 @@ urlpatterns = [
     # logout handle
     path('logouthandle',logouthandle, name='logouthandle'),
 
-    # profile 
+    # show profile 
     path('profile',profileView,name='profile'),
 
+    # update_profile_info
+    path('update_personal_info/', update_personal_info, name='update_personal_info'),
+
+    # update email
+    path('update_email/', update_email,name='update_email'),
+
+    # update contact
+    path('update_contact/', update_contact, name='update_contact')
 ]
