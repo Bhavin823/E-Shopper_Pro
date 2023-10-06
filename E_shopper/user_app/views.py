@@ -119,7 +119,7 @@ def profileView(request):
     context = {
         'user_profile': user_profile
     }
-    return render(request,'user_app/profile.html',context)
+    return render(request,'user_app/dy_section.html',context)
 
 @login_required
 def update_personal_info(request):
