@@ -459,17 +459,17 @@
                                                             </div>
                                                         </div>
                                                         <!-- ADD A NEW ADDRESS -->
-
-
                                                     </div>
-                                                    <!-- ADDRESS LIST -->
-                                                    <div style="border: 1px solid rgb(204, 204, 204); margin-top: 2%;">
+                                                    
+                                                    <!-- ADDRESS LISTS -->
+                                                    <div class="address-container" style="border: 1px solid rgb(204, 204, 204); margin-top: 2%;">
+                                                        <!-- address detail -->
                                                         <div class="address-card" style="position: relative;">
                                                             <div class="address-card-header" style="position: relative; margin-top: 2%;">
                                                                 <span class="address-type" style="margin: 35px 0px 10px 18px; padding: 2px 5px 2px 5px; font-size: 16px; font-weight: 500; color: #878787; background-color: #f0f0f0;">Home</span>
 
                                                                 <!-- Vertical Three Dots Icon -->
-                                                                <div class="options" style="position: absolute; right: 12px;transform: translateY(-115%); cursor: pointer;">
+                                                                <div class="options" style="position: absolute; right: 12px; transform: translateY(-115%); cursor: pointer;">
                                                                     <div style="display: block; width: 4px; height: 4px; background-color: #878787; border-radius: 50%; margin: 3px auto;"></div>
                                                                     <div style="display: block; width: 4px; height: 4px; background-color: #878787; border-radius: 50%; margin: 3px auto;"></div>
                                                                     <div style="display: block; width: 4px; height: 4px; background-color: #878787; border-radius: 50%; margin: 3px auto;"></div>
@@ -507,36 +507,156 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
-                                                        <!-- JavaScript to Show Edit and Delete Options on Hover and Make Them Clickable -->
-                                                        <script>
-                                                            const optionsIcon = document.querySelector('.options');
-                                                            const editDeleteOptions = document.querySelector('.edit-delete-options');
-                                                            const editOption = document.querySelector('.edit-option');
-                                                            const deleteOption = document.querySelector('.delete-option');
-                                                        
+                                                        <!-- address detail -->
+
+                                                        <!-- open form section when click on edit -->
+                                                        <div class="edit-section" style="display: none; padding: 10px; background-color: #ffe5bc;">
+                                                            <!-- form for edit in already have address -->
+                                                            <form class="edit-form" method="post" action="{% url 'user_app:update_personal_info' %}">
+                                                                {% csrf_token %}
+
+                                                                <!-- First Row: Name and Mobile Number -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="name" class="form-control" required placeholder="Name">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="mobile" class="form-control" required placeholder="10-digit mobile number">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Second Row: Pincode and Locality -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="pincode" class="form-control" placeholder="Pincode">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="locality" class="form-control" placeholder="Locality">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Third Row: Address -->
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <textarea name="address" class="form-control" rows="4" placeholder="Address(Area and Street)"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Fourth Row: City and State -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="city" class="form-control" placeholder="City/District/Town">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <select name="state" class="form-control">
+                                                                                <option value="" disabled selected hidden>Select State</option>
+                                                                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                                                                <!-- Add more state options -->
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Fifth Row: Landmark and Optional Number -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="landmark" class="form-control" placeholder="Landmark">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="optionalNumber" class="form-control" placeholder="Optional Number">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Sixth Row: Address Type -->
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label for="addressType" style="font-size: 14px; font-weight: 500; color: #878787;">Address Type</label>
+                                                                            <div>
+                                                                                <input type="radio" id="home" name="addressType" value="home" class="form-check-input" style="margin-right: 5px;">
+                                                                                <label for="home" class="form-check-label" style="font-size: 14px; font-weight: 500; color: #878787;">Home</label>
+                                                                                <input type="radio" id="work" name="addressType" value="work" class="form-check-input" style="margin-right: 5px; margin-left:5%;">
+                                                                                <label for="work" class="form-check-label" style="font-size: 14px; font-weight: 500; color: #878787;">Work</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Seventh Row: Submit and Cancel Buttons -->
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <button type="submit" class="btn btn-primary" style="padding: 12px 20px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; background-color: #ff6d00; border: none; color: white;">Submit</button>
+                                                                        <button type="button" class="btn btn-secondary cancel-button" style="margin: 16px 0px 0px 10px; padding: 12px 20px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; background-color: #cccccc0d; border: none; color: #fe980f;">Cancel</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <!--ADDRESS LISTS -->
+
+                                                    <!-- JavaScript to Show Edit and Delete Options on Hover and Make Them Clickable -->
+                                                    <script>
+                                                        const addressContainers = document.querySelectorAll('.address-container');
+
+                                                        addressContainers.forEach((container, index) => {
+                                                            const optionsIcon = container.querySelector('.options');
+                                                            const editDeleteOptions = container.querySelector('.edit-delete-options');
+                                                            const editOption = container.querySelector('.edit-option');
+                                                            const deleteOption = container.querySelector('.delete-option');
+                                                            const editSection = container.querySelector('.edit-section');
+                                                            const addressCard = container.querySelector('.address-card');
+                                                            const cancelButton = container.querySelector('.cancel-button');
+
                                                             optionsIcon.addEventListener('mouseenter', () => {
                                                                 editDeleteOptions.style.display = 'block';
                                                             });
-                                                        
+
                                                             editDeleteOptions.addEventListener('mouseleave', () => {
                                                                 editDeleteOptions.style.display = 'none';
                                                             });
-                                                        
+
                                                             editOption.addEventListener('click', () => {
-                                                                // Handle the click on "Edit" option here
-                                                                alert('Edit option clicked');
+                                                                // Show the custom edit section and hide the address card
+                                                                editSection.style.display = 'block';
+                                                                addressCard.style.display = 'none';
                                                             });
-                                                        
+
                                                             deleteOption.addEventListener('click', () => {
                                                                 // Handle the click on "Delete" option here
-                                                                alert('Delete option clicked');
+                                                                alert(`Delete option clicked for card ${index + 1}`);
                                                             });
-                                                        </script>
-                                                        
-                                                    </div>
-                                                    <!-- ADDRESS LIST -->
-                                                    <!-- script for new section form -->
+
+                                                            cancelButton.addEventListener('click', () => {
+                                                                // Handle the click on "Cancel" button here
+                                                                replaceWithAddressCard();
+                                                            });
+
+                                                            function replaceWithAddressCard() {
+                                                                // Show the address card and hide the edit form
+                                                                editSection.style.display = 'none';
+                                                                addressCard.style.display = 'block';
+                                                            }
+                                                        });
+                                                    </script>
+                                                    
+                                                    <!-- script for add new address new section form -->
                                                     <script>
                                                         var originalDiv = document.getElementById('clickableDiv');
                                                         var newSection = null;
@@ -697,7 +817,7 @@
                                                             }
                                                         }
                                                     </script>
-                                                    <!-- script for new section form -->
+                                                    <!-- script for add new address new section form -->
                                                 </div>
                                             </div>
                                         </div>
@@ -735,49 +855,49 @@
     </style>
     
 <!-- scripts for left part link management and right side dynamic section manage -->
-<script>
-// JavaScript to handle the click event and show/hide sections
-const links = document.querySelectorAll('.clickable-link');
-const sections = document.querySelectorAll('.hidden-section');
+    <script>
+    // JavaScript to handle the click event and show/hide sections
+        const links = document.querySelectorAll('.clickable-link');
+        const sections = document.querySelectorAll('.hidden-section');
 
-links.forEach(link => {
-    link.addEventListener('click', function (e) {
-    e.preventDefault();
-    const targetId = this.getAttribute('href').substring(1);
-    const targetSection = document.getElementById(targetId);
-    
-    // Hide all sections
-    sections.forEach(section => {
-        section.style.display = 'none';
-    });
+        links.forEach(link => {
+            link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            
+            // Hide all sections
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
 
-    // Show the target section
-    targetSection.style.display = 'block';
+            // Show the target section
+            targetSection.style.display = 'block';
 
-    // Update link colors
-    links.forEach(link => {
-        if (link.getAttribute('href').substring(1) === targetId) {
-        link.style.color = 'orange';
-        } else {
-        link.style.color = '#878787';
+            // Update link colors
+            links.forEach(link => {
+                if (link.getAttribute('href').substring(1) === targetId) {
+                link.style.color = 'orange';
+                } else {
+                link.style.color = '#878787';
+                }
+            });
+
+            // Store the selected section in localStorage
+            localStorage.setItem('selectedSection', targetId);
+            });
+        });
+
+        // Retrieve and show the stored section (if any) on page load
+        const selectedSection = localStorage.getItem('selectedSection');
+        if (selectedSection) {
+            const targetSection = document.getElementById(selectedSection);
+            if (targetSection) {
+            targetSection.style.display = 'block';
+            document.querySelector(`[href="#${selectedSection}"]`).style.color = 'orange';
+            }
         }
-    });
-
-    // Store the selected section in localStorage
-    localStorage.setItem('selectedSection', targetId);
-    });
-});
-
-// Retrieve and show the stored section (if any) on page load
-const selectedSection = localStorage.getItem('selectedSection');
-if (selectedSection) {
-    const targetSection = document.getElementById(selectedSection);
-    if (targetSection) {
-    targetSection.style.display = 'block';
-    document.querySelector(`[href="#${selectedSection}"]`).style.color = 'orange';
-    }
-}
-</script>
+    </script>
       
 </section>
 <!--main content-->
