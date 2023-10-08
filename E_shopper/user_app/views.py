@@ -7,10 +7,12 @@ from django.http import JsonResponse,HttpResponse
 from user_app.models import UserProfile,UserAddress
 
 # Create your views here.
+# signup page
 def signupView(request):  
      # Render the signup.html template
     return render(request,'user_app/signup.html')
 
+# handle signup
 def handelSignup(request):
     if request.method == "POST":
          # Get the POST values from the form
@@ -45,7 +47,7 @@ def handelSignup(request):
         # Return a 404 response for non-POST requests
         return HttpResponse('404 - Not Found')
 
-
+# login page
 def loginView(request):
     # fetch detail from post page for return after login
     retpath = request.GET.get('retpath', '')
@@ -61,6 +63,7 @@ def loginView(request):
     }
     return render(request,'user_app/login.html',context)
 
+# login handle
 def handleLogin(request):
     if request.method == "POST":
         # retrive from login form
@@ -93,11 +96,14 @@ def handleLogin(request):
     # If the request method is not POST, return a 404 response
     return HttpResponse('404 - Not Found')
 
+# logout handle
 def logouthandle(request):
     logout(request)
     print("logout")
     return redirect('home')
 
+
+# profile page view
 def profileView(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     user_addresses = UserAddress.objects.filter(user=request.user)
@@ -123,6 +129,7 @@ def profileView(request):
     return render(request,'user_app/profile.html',context)
 
 @login_required
+# update profile personal detail
 def update_personal_info(request):
     user_profile =  UserProfile.objects.get(user=request.user) 
 
@@ -139,6 +146,7 @@ def update_personal_info(request):
         user_profile.save()
     return redirect('user_app:profile')
 
+# update profile email 
 @login_required
 def update_email(request):
 
@@ -154,6 +162,7 @@ def update_email(request):
     
     return redirect('user_app:profile')
 
+# update profile contact
 @login_required
 def update_contact(request):
     user_profile = UserProfile.objects.get(user=request.user)
@@ -168,6 +177,7 @@ def update_contact(request):
     
     return redirect('user_app:profile')
 
+# add address to user profile
 @login_required
 def add_address(request):
     if request.method == 'POST':
@@ -209,6 +219,7 @@ def add_address(request):
 
     return redirect('user_app:profile')
 
+# edit user profile particular existed addresses
 @login_required
 def edit_address(request,address_id):
     address = get_object_or_404(UserAddress, id=address_id, user=request.user)
@@ -229,7 +240,7 @@ def edit_address(request,address_id):
 
         return redirect('user_app:profile')
     
-
+# delete user profile particular address
 @login_required
 def delete_address(request,address_id):
     address = get_object_or_404(UserAddress, id=address_id, user=request.user)
