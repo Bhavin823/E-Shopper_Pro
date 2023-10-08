@@ -27,5 +27,15 @@ urlpatterns = [
     path('update_email/', update_email,name='update_email'),
 
     # update contact
-    path('update_contact/', update_contact, name='update_contact')
+    path('update_contact/', update_contact, name='update_contact'),
+
+    # add new address
+    path('add_address/', add_address, name='add_address'),
+
+    # edit address
+    path('edit_address/<int:address_id>/', edit_address, name='edit_address'),
+
+    # delete address
+    path('delete_address/<int:address_id>/', delete_address,name='delete_address'),
+
 ]

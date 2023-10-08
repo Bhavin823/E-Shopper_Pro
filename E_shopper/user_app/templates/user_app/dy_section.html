@@ -902,3 +902,60 @@
 </section>
 <!--main content-->
 {% endblock content %}
+
+
+<div class="row" style="padding-left: 4%; margin-bottom: 30px;">
+    <h5 style="display: inline-block; margin-right: 10px;">Your Gender</h5>
+    <div style="display: flex; align-items: center;">
+        <div style="display: inline-block; margin-right: 10px;">
+            {% if user_profile.gender == 'M' %}
+                <!--Gender Male input-->
+                <input type="radio" id="male" name="gender" value="M"
+                    style="transform: scale(1.5); width: 15px; height: 15px;" disabled checked>
+                <!--Gender Male input-->
+                <!--Gender Male Label-->
+                <label for="male"
+                    style="display: inline; margin-left: 5px; color: #696763; font-weight: 400;">
+                    Male
+                </label>
+                <!--Gender Male Label-->
+            {% else %}
+                <!--Gender Male input-->
+                <input type="radio" id="male" name="gender" value="M"
+                    style="transform: scale(1.5); width: 15px; height: 15px;" disabled >
+                <!--Gender Male input-->
+                <!--Gender Male Label-->
+                <label for="male"
+                    style="display: inline; margin-left: 5px; color: #696763; font-weight: 400;">
+                    Male
+                </label>
+                <!--Gender Male Label-->
+            {% endif %}
+        </div>
+        <div style="display: inline-block; margin-right: 10px;">
+            {% if user_profile.gender == 'F' %}
+                <!--Gender Female input-->
+                <input type="radio" id="female" name="gender" value="F"
+                    style="transform: scale(1.5); width: 15px; height: 15px;" disabled checked>
+                <!--Gender Female input-->
+                <!--Gender Female Label-->
+                <label for="female"
+                    style="display: inline; margin-left: 5px; color: #696763; font-weight: 400;">
+                    Female
+                </label>
+                <!--Gender Female Label-->
+            {% else %}
+                <!--Gender Female input-->
+                <input type="radio" id="female" name="gender" value="F"
+                    style="transform: scale(1.5); width: 15px; height: 15px;" disabled>
+                <!--Gender Female input-->
+                <!--Gender Female Label-->
+                <label for="female"
+                    style="display: inline; margin-left: 5px; color: #696763; font-weight: 400;">
+                    Female
+                </label>
+                <!--Gender Female Label-->
+            {% endif %}
+        </div>
+    </div>
+</div>

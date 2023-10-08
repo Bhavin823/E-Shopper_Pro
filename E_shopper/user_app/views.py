@@ -1,10 +1,10 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login ,logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import JsonResponse,HttpResponse
-from user_app.models import UserProfile
+from user_app.models import UserProfile,UserAddress
 
 # Create your views here.
 def signupView(request):  
@@ -100,7 +100,7 @@ def logouthandle(request):
 
 def profileView(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-
+    user_addresses = UserAddress.objects.filter(user=request.user)
     if request.method == 'POST':
         user_profile.firstname = request.POST.get('firstname')
         user_profile.lastname = request.POST.get('lastname')
@@ -117,7 +117,8 @@ def profileView(request):
     
 
     context = {
-        'user_profile': user_profile
+        'user_profile': user_profile,
+        'user_addresses': user_addresses,
     }
     return render(request,'user_app/profile.html',context)
 
@@ -165,4 +166,74 @@ def update_contact(request):
         # Save the user contact
         user_profile.save()
     
+    return redirect('user_app:profile')
+
+@login_required
+def add_address(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        print(name)
+        contact = request.POST.get('mobile')
+        print(contact)
+        pincode = request.POST.get('pincode')
+        print(pincode)
+        locality = request.POST.get('locality')
+        print(locality)
+        address = request.POST.get('address')
+        print(address)
+        city = request.POST.get('city')
+        print(city)
+        state = request.POST.get('state')
+        print(state)
+        landmark = request.POST.get('landmark')
+        print(landmark)
+        optionalnumber = request.POST.get('optionalNumber')
+        print(optionalnumber)
+        addresstype = request.POST.get('addressType')
+        print(addresstype)
+
+        address = UserAddress(
+            user = request.user,
+            name = name,
+            contact = contact,
+            pincode = pincode,
+            locality = locality,
+            address = address,
+            city = city,
+            state = state,
+            landmark = landmark,
+            optionalnumber = optionalnumber,
+            addresstype = addresstype
+        )
+        address.save()
+
+    return redirect('user_app:profile')
+
+@login_required
+def edit_address(request,address_id):
+    address = get_object_or_404(UserAddress, id=address_id, user=request.user)
+    if request.method == 'POST':
+
+        address.name = request.POST.get('name')  # Use request.POST.get() with a default value
+        address.contact = request.POST.get('mobile')
+        address.pincode = request.POST.get('pincode')
+        address.locality = request.POST.get('locality')
+        address.address = request.POST.get('address')
+        address.city = request.POST.get('city')
+        address.state = request.POST.get('state')
+        address.landmark = request.POST.get('landmark')
+        address.optionalnumber = request.POST.get('optionalNumber')
+        address.addresstype = request.POST.get('addressType')
+
+        address.save()
+
+        return redirect('user_app:profile')
+    
+
+@login_required
+def delete_address(request,address_id):
+    address = get_object_or_404(UserAddress, id=address_id, user=request.user)
+    
+    address.delete()
+
     return redirect('user_app:profile')
