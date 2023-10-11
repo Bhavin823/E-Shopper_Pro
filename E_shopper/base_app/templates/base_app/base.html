@@ -89,8 +89,8 @@
 								<!-- <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li> -->
 								<!-- Check if user is authenticated -->
 								{% if user.is_authenticated %}
-								<li><a href="#" style="pointer-events: none;"><p style="color:black;">Welcome, {{ user.username }}!</p></a></li>
-								<li><a href="#checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+								<li><a href="#" style="pointer-events: none;"><p style="color:black;">Welcome, {{ user.username |capfirst }}!</p></a></li>
+								<li><a href="{% url 'cart_app:checkout' %}"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="{% url 'cart_app:cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
 								<li><a href="{% url 'user_app:profile' %}"><i class="fa fa-user"></i> Profile</a></li>
 								<li><a href="{% url 'user_app:logouthandle' %}"><i class="fa fa-long-arrow-right"></i> Logout</a></li>

@@ -12,6 +12,12 @@ urlpatterns = [
     path('deleteitem/<int:item_id>', delete_cart_item, name='delete_cart_item'),
     path('clearcart', clear_cart, name='clear_cart'),
     path('increment_cart_quantity/<int:item_id>/', increment_cart_quantity, name='increment_cart_quantity'),
-    path('decrement_cart_quantity/<int:item_id>/', decrement_cart_quantity, name='decrement_cart_quantity')
+    path('decrement_cart_quantity/<int:item_id>/', decrement_cart_quantity, name='decrement_cart_quantity'),
+
+    # for checkout page
+    path('checkout/', checkoutView, name='checkout'),
+
+    # save selected address id
+    path('select_address/', select_address, name='select_address'),
 
 ]

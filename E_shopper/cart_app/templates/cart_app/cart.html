@@ -94,7 +94,7 @@
                         <li>Shipping Cost <span>₹{{shipping_cost}}</span></li>
                         <li>Total <span>₹{{ cart_total|add:shipping_cost }}</span></li>
                     </ul>
-                    <a class="btn btn-default update" href="#">Check Out</a>
+                    <a class="btn btn-default update" href="{% url 'cart_app:checkout' %}">Check Out</a>
                 </div>
             </div>
         </div>

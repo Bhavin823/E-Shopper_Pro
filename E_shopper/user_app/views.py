@@ -89,6 +89,8 @@ def handleLogin(request):
                 return redirect('product_app:products',subcatslug=subcatslug)
             elif retpath == 'prodet':
                 return redirect('product_app:productdetail',productslug=productslug)
+            elif retpath == 'checkout':
+                return redirect('cart_app:checkout')
             return redirect('home')
         else:
             # If authentication fails, render the login page with an error message
@@ -180,6 +182,7 @@ def update_contact(request):
 # add address to user profile
 @login_required
 def add_address(request):
+    retpath = request.GET.get('retpath', '')
     if request.method == 'POST':
         name = request.POST.get('name')
         print(name)
@@ -216,12 +219,16 @@ def add_address(request):
             addresstype = addresstype
         )
         address.save()
+        
+    if retpath == "checkout":
+            return redirect('cart_app:checkout')
 
     return redirect('user_app:profile')
 
 # edit user profile particular existed addresses
 @login_required
 def edit_address(request,address_id):
+    retpath = request.GET.get('retpath', '')
     address = get_object_or_404(UserAddress, id=address_id, user=request.user)
     if request.method == 'POST':
 
@@ -238,13 +245,20 @@ def edit_address(request,address_id):
 
         address.save()
 
+        if retpath == "checkout":
+            return redirect('cart_app:checkout')
+
         return redirect('user_app:profile')
     
 # delete user profile particular address
 @login_required
 def delete_address(request,address_id):
+    retpath = request.GET.get('retpath', '')
     address = get_object_or_404(UserAddress, id=address_id, user=request.user)
     
     address.delete()
+
+    if retpath == "checkout":
+        return redirect('cart_app:checkout')
 
     return redirect('user_app:profile')
