@@ -150,14 +150,5 @@ def checkoutView(request):
     
     return render(request, 'cart_app/checkout.html', context)
 
-# views.py
 
-from django.shortcuts import render, redirect
 
-def select_address(request):
-    if request.method == 'POST':
-        selected_address_id = request.POST.get('address')
-        print("selected_address_id: ",selected_address_id)
-        if selected_address_id:
-            request.session['selected_address_id'] = selected_address_id
-    return redirect('cart_app:checkout')

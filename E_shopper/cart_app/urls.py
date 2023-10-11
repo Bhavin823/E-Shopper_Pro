@@ -17,7 +17,5 @@ urlpatterns = [
     # for checkout page
     path('checkout/', checkoutView, name='checkout'),
 
-    # save selected address id
-    path('select_address/', select_address, name='select_address'),
 
 ]
