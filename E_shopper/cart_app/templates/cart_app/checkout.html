@@ -2,619 +2,235 @@
 {% load static %}
 {% block content %}
 
-<body>
-	
+<section id="cart_items">
+<div class="container">
+    <!-- breadcrumbs -->
+    <div class="breadcrumbs">
+        <ol class="breadcrumb" style="margin-bottom:0px;">
+            <li><a href="#">Home</a></li>
+            <li class="active">Check out</li>
+        </ol>
+    </div>
 
-	<!-- main content -->
-	<section id="cart_items">
-		<div class="container">
+    <form method="post" action="{% url 'order_app:create_order' %}">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-3">
+                {% if request.user.is_authenticated %}
+                    <h3>Login <i class="fa fa-check" style="font-size: x-large; color:#FE980f"></i></h3>
+                        
+                    <table style="border-collapse: separate; border-spacing: 5px; border: 1px solid #ccc;">
+                        <tr>
+                            <th style="padding: 5px;">Name</th>
+                            <td style="padding: 5px;">{{user_profile.firstname}} {{user_profile.lastname}}</td>
+                        </tr>
+                        <tr>
+                            <th style="padding: 5px;">Phone</th>
+                            <td style="padding: 5px;">{{user_profile.contact}}</td>
+                        </tr>
+                    </table>
+                            
+                    <h5><a href="{% url 'user_app:login' %}?retpath=checkout">Logout & Sign in to another account</a></h5>
+                {% else %}
+                    <a href="{% url 'user_app:login' %}?retpath=checkout">You need to login first</a></h5>
+                {% endif %}
+            </div>
+            <div class="col-sm-9" style="border:1px solid #ccc">
+                <h3>Delivery Address</h3>
+                <div class="row" style="padding-left: 2%; margin-bottom: 0px; display: flex; justify-content: space-between; width: 100%;">
+                    <div style="width: 97%; margin-bottom: 15px; display: flex; flex-direction: column; position: relative;">
+                        {% for address in user_addresses %}
+                        <label for="custadd{{forloop.counter}}" style="cursor: pointer;">
+                            <div class="address-container" style="border: 1px solid rgb(204, 204, 204); margin-top: 2%; margin-bottom: 2%; width: 100%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); transition: transform 0.2s;">
+                                <!-- Address Card -->
+                                <div class="address-card" style="position: relative; transform-style: preserve-3d; transition: transform 0.2s;">
+                                    <!-- Address Header -->
+                                    <div class="address-card-header" style="position: relative; margin-top: 2%;">
+                                        <span class="address-type" style="margin: 35px 0px 10px 18px; padding: 2px 5px 2px 5px; font-size: 16px; font-weight: 500; color: #878787; background-color: #f0f0f0;">{{address.addresstype}}</span>
+                                        <div class="form-check mr-5 mb-5" style="position: absolute; right: 12px; transform: translateY(-115%); cursor: pointer;">
+                                            <input class="form-check-input" type="radio" name="address_id" id="custadd{{forloop.counter}}" value="{{address.id}}" required>
+                                            <label class="dorm-check-label fw-bold" for="custadd{{forloop.counter}}">
+                                                Address:{{forloop.counter}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!-- Address Header -->
 
-			<!-- breadcrumbs -->
-			<div class="breadcrumbs">
-				<ol class="breadcrumb" style="margin-bottom:0px;">
-				  <li><a href="#">Home</a></li>
-				  <li class="active">Check out</li>
-				</ol>
-			</div>
-
-			<div class="shopper-informations">
-				<div class="row">
-					<div class="col-sm-3">
-						<div class="shopper-info">
-							{% if request.user.is_authenticated %}
-								<h3>Login <i class="fa fa-check" style="font-size: x-large; color:#FE980f"></i></h3>
-									
-								<table style="border-collapse: separate; border-spacing: 5px; border: 1px solid #ccc;">
-									<tr>
-										<th style="padding: 5px;">Name</th>
-										<td style="padding: 5px;">{{user_profile.firstname}} {{user_profile.lastname}}</td>
-									</tr>
-									<tr>
-										<th style="padding: 5px;">Phone</th>
-										<td style="padding: 5px;">{{user_profile.contact}}</td>
-									</tr>
-								</table>
-										
-								<h5><a href="{% url 'user_app:login' %}?retpath=checkout">Logout & Sign in to another account</a></h5>
-							{% else %}
-								<a href="{% url 'user_app:login' %}?retpath=checkout">You need to login first</a></h5>
-							{% endif %}
-						</div>
-					</div>
-					<div class="col-sm-9 clearfix" style="border:1px solid #ccc;">
-						<div class="bill-to">
-							<h3>Delivery Address</h3>
-							<div class="row" style="padding-left: 2%; margin-bottom: 0px;">
-                                <div
-                                    style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 15px;">
-                                    <div style="width: 97%;">
-                                        <div style="margin-bottom: 15px;">
-                                            <div style="display: flex; flex-direction: column; position: relative;">
-                                                <div style="position: relative;">
-													<!-- ADDRESS LISTS -->
-													{% for address in user_addresses %}
-															<div class="address-container" style="border: 1px solid rgb(204, 204, 204); margin-top: 2%; margin-bottom:2%; width: 100%;">
-																<!-- address detail -->
-																<div class="address-card" style="position: relative;">
-																	<div class="address-card-header" style="position: relative; margin-top: 2%;">
-																		<span class="address-type" style="margin: 35px 0px 10px 18px; padding: 2px 5px 2px 5px; font-size: 16px; font-weight: 500; color: #878787; background-color: #f0f0f0;">{{address.addresstype}}</span>
-
-																		<!-- Vertical Three Dots Icon -->
-																		<div class="options" style="position: absolute; right: 12px; transform: translateY(-115%); cursor: pointer;">
-																			<div style="display: block; width: 4px; height: 4px; background-color: #878787; border-radius: 50%; margin: 3px auto;"></div>
-																			<div style="display: block; width: 4px; height: 4px; background-color: #878787; border-radius: 50%; margin: 3px auto;"></div>
-																			<div style="display: block; width: 4px; height: 4px; background-color: #878787; border-radius: 50%; margin: 3px auto;"></div>
-																		</div>
-																		<!-- Edit and Delete Options -->
-																		<div class="edit-delete-options" style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background-color: #fff; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); padding: 5px; text-align: center;">
-																			<div class="edit-option" style="cursor: pointer; padding: 5px; color: #FE980f;">Edit</div>
-																			<div class="delete-option" style="cursor: pointer; padding: 5px; color: #FE980f;">
-																				<a style="color: #FE980f;"href="{% url 'user_app:delete_address' address.id %}?retpath=checkout">Delete</a>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- Address Card Body -->
-																	<div class="address-card-body" style="margin-top: 0px; padding-left: 2%;">
-																		<!-- Name and Mobile Number in the Same Row -->
-																		<div class="row" style="margin-bottom: 0px;">
-																			<div class="col-md-3">
-																				<div style="font-size: 16px; font-weight: 500; color: #212121;">{{address.name | capfirst}}</div> <!-- Replace with the actual name value -->
-																			</div>
-																			<div class="col-md-6">
-																				<div style="font-size: 16px; font-weight: 500; color: #212121;">{{address.contact}}</div> <!-- Replace with the actual mobile number value -->
-																			</div>
-																		</div>
-
-																		<!-- Address -->
-																		<div class="row" style="margin-bottom: 0px;">
-																			<div class="col-md-12">
-																				<div style="font-size: 14px; font-weight: 400; color: #212121;">{{address.address}}</div> <!-- Replace with the actual address value -->
-																			</div>
-																		</div>
-
-																		<!-- Locality, City, State, and Pincode in the Same Row -->
-																		<div class="row" style="margin-bottom: 10px;">
-																			<div class="col-md-12">
-																				<div style="font-size: 14px; font-weight: 400; color: #212121;">
-																					{{address.locality}}, {{address.city}}, {{address.state}} - <strong>{{address.pincode}}</strong>
-																				</div> <!-- Replace with the actual locality value -->
-																			</div>
-																		</div>
-																	</div>
-																</div>
-																<!-- address detail -->
-
-																<!-- open form when click on edit -->
-																<div class="edit-section" style="display: none; padding: 10px; background-color: #ffe5bc;">
-																	<!-- form for edit in already have address -->
-																	<form class="edit-form" method="post" action="{% url 'user_app:edit_address' address.id %}?retpath=checkout">
-																		{% csrf_token %}
-
-																		<!-- First Row: Name and Mobile Number -->
-																		<div class="row">
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<input type="text" name="name" value="{{address.name}}" class="form-control" required placeholder="Name">
-																				</div>
-																			</div>
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<input type="text" name="mobile" value="{{address.contact}}" class="form-control" required placeholder="10-digit mobile number">
-																				</div>
-																			</div>
-																		</div>
-
-																		<!-- Second Row: Pincode and Locality -->
-																		<div class="row">
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<input type="text" name="pincode" value="{{address.pincode}}" class="form-control" placeholder="Pincode">
-																				</div>
-																			</div>
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<input type="text" name="locality" value="{{address.locality}}" class="form-control" placeholder="Locality">
-																				</div>
-																			</div>
-																		</div>
-
-																		<!-- Third Row: Address -->
-																		<div class="row">
-																			<div class="col-md-12">
-																				<div class="form-group">
-																					<textarea name="address"  class="form-control" rows="4" placeholder="Address(Area and Street)">{{address.address}}</textarea>
-																				</div>
-																			</div>
-																		</div>
-
-																		<!-- Fourth Row: City and State -->
-																		<div class="row">
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<input type="text" name="city" value="{{address.city}}" class="form-control" placeholder="City/District/Town">
-																				</div>
-																			</div>
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<select name="state" class="form-control">
-																						{% if address.state %}
-																						<option value="{{address.state}}" selected>{{address.state}}</option>
-																						{%else%}
-																						<option value="" disabled selected hidden>Select State</option>
-																						{% endif %}
-																						<option value="Andhra Pradesh">Andhra Pradesh</option>
-																						<option value="Arunachal Pradesh">Arunachal Pradesh</option>
-																						<option value="Andman & Nicobar">Andman & Nicobar</option>
-																						<option value="Assam">Assam</option>
-																						<option value="Bihar">Bihar</option>
-																						<option value="Chandigarh">Chandigarh</option>
-																						<option value="Chattisgadh">Chattisgadh</option>
-																						<option value="Dadra Nagar">Dadra Nagar</option>
-																						<option value="Daman & Diu">Daman & Diu</option>
-																						<option value="Delhi">Delhi</option>
-																						<option value="Goa">Goa</option>
-																						<option value="Gujrat">Gujrat</option>
-																						<option value="Haryana">Haryana</option>
-																						<option value="Himachal Pradesh">Himachal Pradesh</option>
-																						<option value="Jammu">Jammu</option>
-																						<option value="Jarkhand">Jarkhand</option>
-																						<option value="Karnataka">Karnataka</option>
-																						<option value="Kerala">Kerala</option>
-																						<option value="Ladakh">Ladakh</option>
-																						<option value="Madhya Pradesh">Madhya Pradesh</option>
-																						<option value="Manipur">Manipur</option>
-																						<option value="Maharashtra">Maharashtra</option>
-																						<option value="Meghalaya">Meghalaya</option>
-																						<option value="Mizoram">Mizoram</option>
-																						<option value="Nagaland">Nagaland</option>
-																						<option value="Odhisha">Odhisha</option>
-																						<option value="Punjab">Punjab</option>
-																						<option value="Rajasthan">Rajasthan</option>
-																						<option value="Sikkim">Sikkim</option>
-																						<option value="Tripura">Tripura</option>
-																						<option value="Tamil Nadu">Tamil Nadu</option>
-																						<option value="Telgana">Telgana</option>
-																						<option value="Utar Pradesh">Utar Pradesh</option>
-																						<option value="Utrakhand">Utrakhand</option>
-																						<option value="West Benagal">West Benagal</option>
-																						<!-- Add more state options -->
-																					</select>
-																				</div>
-																			</div>
-																		</div>
-
-																		<!-- Fifth Row: Landmark and Optional Number -->
-																		<div class="row">
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<input type="text" name="landmark" value="{{address.landmark}}" class="form-control" placeholder="Landmark">
-																				</div>
-																			</div>
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<input type="text" name="optionalNumber"  value="{{address.optionalnumber}}" class="form-control" placeholder="Optional Number">
-																				</div>
-																			</div>
-																		</div>
-
-																		<!-- Sixth Row: Address Type -->
-																		<div class="row">
-																			<div class="col-md-12">
-																				<div class="form-group">
-																					<label for="addressType" style="font-size: 14px; font-weight: 500; color: #878787;">Address Type</label>
-																					<div>
-																						{% if address.addresstype == 'Home' %}
-																							<input type="radio" id="home" name="addressType" value="Home" class="form-check-input" style="margin-right: 5px;" checked>
-																							<label for="home" class="form-check-label" style="font-size: 14px; font-weight: 500; color: #878787;">Home</label>
-																						{%else%}
-																							<input type="radio" id="home" name="addressType" value="Home" class="form-check-input" style="margin-right: 5px;">
-																							<label for="home" class="form-check-label" style="font-size: 14px; font-weight: 500; color: #878787;">Home</label>
-																						{% endif %}
-																						{% if address.addresstype == 'Work' %}
-																							<input type="radio" id="work" name="addressType" value="Work" class="form-check-input" style="margin-right: 5px; margin-left:5%;" checked>
-																							<label for="work" class="form-check-label" style="font-size: 14px; font-weight: 500; color: #878787;">Work</label>
-																						{% else %}
-																							<input type="radio" id="work" name="addressType" value="Work" class="form-check-input" style="margin-right: 5px; margin-left:5%;">
-																							<label for="work" class="form-check-label" style="font-size: 14px; font-weight: 500; color: #878787;">Work</label>
-																						{% endif %}
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-
-																		<!-- Seventh Row: Submit and Cancel Buttons -->
-																		<div class="row">
-																			<div class="col-md-12">
-																				<button type="submit" class="btn btn-primary" style="padding: 12px 20px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; background-color: #ff6d00; border: none; color: white;">Submit</button>
-																				<button type="button" class="btn btn-secondary cancel-button" style="margin: 16px 0px 0px 10px; padding: 12px 20px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; background-color: #cccccc0d; border: none; color: #fe980f;">Cancel</button>
-																			</div>
-																		</div>
-																	</form>
-																</div>
-																<!-- open edit address form-->
-															</div>
-													{% endfor %}
-                                                    <!--ADDRESS LISTS -->
-													<!-- script for select one of address -->
-													
-													
-													<!-- script for select one of address -->
-													
-													<!-- ADD A NEW ADDRESS -->
-													<div id="container">
-                                                        <div style="border: 1px solid rgb(204, 204, 204); " id="clickableDiv" onclick="toggleSection()">
-                                                            <div class="row">
-                                                                <div class="col-sm-1" style="padding-left: 30px;">
-                                                                    <div class="view-product">
-                                                                        <i class="fa fa-plus" style="font-size: x-large; color:#FE980f; margin-top:10px;"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-11" style="padding:0px;">
-                                                                    <h5 style="font-size:medium; margin-top:12px; margin-bottom: 12px; color:#FE980f;">ADD A NEW ADDRESSES</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-													<!-- ADD A NEW ADDRESS -->
-
-                                                    <!-- JavaScript to Show Edit and Delete Options on Hover and Make Them Clickable -->
-                                                    <script>
-                                                        const addressContainers = document.querySelectorAll('.address-container');
-
-                                                        addressContainers.forEach((container, index) => {
-                                                            const optionsIcon = container.querySelector('.options');
-                                                            const editDeleteOptions = container.querySelector('.edit-delete-options');
-                                                            const editOption = container.querySelector('.edit-option');
-                                                            const deleteOption = container.querySelector('.delete-option');
-                                                            const editSection = container.querySelector('.edit-section');
-                                                            const addressCard = container.querySelector('.address-card');
-                                                            const cancelButton = container.querySelector('.cancel-button');
-
-                                                            optionsIcon.addEventListener('mouseenter', () => {
-                                                                editDeleteOptions.style.display = 'block';
-                                                            });
-
-                                                            editDeleteOptions.addEventListener('mouseleave', () => {
-                                                                editDeleteOptions.style.display = 'none';
-                                                            });
-
-                                                            editOption.addEventListener('click', () => {
-                                                                // Show the custom edit section and hide the address card
-                                                                editSection.style.display = 'block';
-                                                                addressCard.style.display = 'none';
-                                                            });
-
-                                                            deleteOption.addEventListener('click', () => {
-                                                                // Handle the click on "Delete" option here
-                                                                //alert(`Delete option clicked for card ${index + 1}`);
-                                                            });
-
-                                                            cancelButton.addEventListener('click', () => {
-                                                                // Handle the click on "Cancel" button here
-                                                                replaceWithAddressCard();
-                                                            });
-
-                                                            function replaceWithAddressCard() {
-                                                                // Show the address card and hide the edit form
-                                                                editSection.style.display = 'none';
-                                                                addressCard.style.display = 'block';
-                                                            }
-                                                        });
-                                                    </script>
-                                                    
-                                                    <!-- script for add new address new section form -->
-                                                    <script>
-                                                        var originalDiv = document.getElementById('clickableDiv');
-                                                        var newSection = null;
-                                                    
-                                                        function toggleSection() {
-                                                            if (newSection === null) {
-                                                                // Create the new section
-                                                                newSection = document.createElement('div');
-                                                                newSection.style.border = '1px solid rgb(204, 204, 204)';
-                                                                newSection.style.padding = '10px';
-                                                                newSection.style.backgroundColor = '#ffe5bc';
-                                                    
-                                                                // Set the inner HTML of the new section to your desired HTML content
-                                                                newSection.innerHTML = `
-                                                                <div class="row" style="padding-left: 2%;">
-                                                                    <h4 style="display: inline-block; margin-right: 10px; color:#FE980f;">ADD A NEW ADDRESSES</h4>
-                                                                </div>
-                                                                <form id="profileForm" method="post" action="{% url 'user_app:add_address' %}?retpath=checkout">
-                                                                    {% csrf_token %}
-
-                                                                    <!-- First Row: Name and Mobile Number -->
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <input id="name" type="text" name="name" class="form-control" required placeholder="Name" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; transition: border-color 0.3s; font-size: 14px;">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <input id="mobile" type="text" name="mobile" class="form-control" required placeholder="10-digit mobile number" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; transition: border-color 0.3s; font-size: 14px;">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <!-- Second Row: Pincode and Locality -->
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <input id="pincode" type="text" name="pincode" class="form-control" placeholder="Pincode" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; transition: border-color 0.3s; font-size: 14px;">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <input id="locality" type="text" name="locality" class="form-control" placeholder="Locality" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; transition: border-color 0.3s; font-size: 14px;">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <!-- Third Row: Address -->
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <div class="form-group">
-                                                                                <textarea id="address" name="address" class="form-control" rows="4" placeholder="Address(Area and Street)" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; transition: border-color 0.3s; font-size: 14px;"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <!-- Fourth Row: City and State -->
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <input id="city" type="text" name="city" class="form-control" placeholder="City/District/Town" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; transition: border-color 0.3s; font-size: 14px;">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <select id="state" name="state" class="form-control" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; transition: border-color 0.3s; font-size: 12px;">
-                                                                                    <option value="" disabled selected hidden>Select State</option> <!-- Default label -->
-                                                                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-                                                                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                                                                                    <option value="Andman & Nicobar">Andman & Nicobar</option>
-                                                                                    <option value="Assam">Assam</option>
-                                                                                    <option value="Bihar">Bihar</option>
-                                                                                    <option value="Chandigarh">Chandigarh</option>
-                                                                                    <option value="Chattisgadh">Chattisgadh</option>
-                                                                                    <option value="Dadra Nagar">Dadra Nagar</option>
-                                                                                    <option value="Daman & Diu">Daman & Diu</option>
-                                                                                    <option value="Delhi">Delhi</option>
-                                                                                    <option value="Goa">Goa</option>
-                                                                                    <option value="Gujrat">Gujrat</option>
-                                                                                    <option value="Haryana">Haryana</option>
-                                                                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                                                                                    <option value="Jammu">Jammu</option>
-                                                                                    <option value="Jarkhand">Jarkhand</option>
-                                                                                    <option value="Karnataka">Karnataka</option>
-                                                                                    <option value="Kerala">Kerala</option>
-                                                                                    <option value="Ladakh">Ladakh</option>
-                                                                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                                                                                    <option value="Manipur">Manipur</option>
-                                                                                    <option value="Maharashtra">Maharashtra</option>
-                                                                                    <option value="Meghalaya">Meghalaya</option>
-                                                                                    <option value="Mizoram">Mizoram</option>
-                                                                                    <option value="Nagaland">Nagaland</option>
-                                                                                    <option value="Odhisha">Odhisha</option>
-                                                                                    <option value="Punjab">Punjab</option>
-                                                                                    <option value="Rajasthan">Rajasthan</option>
-                                                                                    <option value="Sikkim">Sikkim</option>
-                                                                                    <option value="Tripura">Tripura</option>
-                                                                                    <option value="Tamil Nadu">Tamil Nadu</option>
-                                                                                    <option value="Telgana">Telgana</option>
-                                                                                    <option value="Utar Pradesh">Utar Pradesh</option>
-                                                                                    <option value="Utrakhand">Utrakhand</option>
-                                                                                    <option value="West Benagal">West Benagal</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <!-- Fifth Row: Landmark and Optional Number -->
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <input id="landmark" type="text" name="landmark" class="form-control" placeholder="Landmark" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; transition: border-color 0.3s; font-size: 14px;">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <input id="optionalNumber" type="text" name="optionalNumber" class="form-control" placeholder="Optional Number" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; transition: border-color 0.3s; font-size: 14px;">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <!-- Sixth Row: Address Type -->
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <div class="form-group">
-                                                                                <label for="addressType" style="font-size: 14px; font-weight: 500; color: #878787;">Address Type</label>
-                                                                                <div>
-                                                                                    <input type="radio" id="home" name="addressType" value="Home" class="form-check-input" style="margin-right: 5px;">
-                                                                                    <label for="home" class="form-check-label" style="font-size: 14px; font-weight: 500; color: #878787;">Home</label>
-                                                                                    <input type="radio" id="work" name="addressType" value="Work" class="form-check-input" style="margin-right: 5px; margin-left:5%;">
-                                                                                    <label for="work" class="form-check-label" style="font-size: 14px; font-weight: 500; color: #878787;">Work</label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                    <!-- Seventh Row: Submit and Cancel Buttons -->
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <button id="submitButton" type="submit" class="btn btn-primary" style="padding: 12px 20px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; background-color: #ff6d00; border: none; color: white;">Submit</button>
-                                                                            <button id="cancelButton" onclick="toggleSection()" type="button" class="btn btn-secondary" style="margin: 16px 0px 0px 10px; padding: 12px 20px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; background-color: #cccccc0d; border: none; color: #fe980f;">Cancel</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-
-                                                                `;
-                                                                
-                                                                // Replace the original div with the new section
-                                                                originalDiv.style.display = 'none';
-                                                                originalDiv.parentElement.appendChild(newSection);
-                                                            } else {
-                                                                // Remove the new section and show the original div
-                                                                originalDiv.style.display = 'block';
-                                                                newSection.parentElement.removeChild(newSection);
-                                                                newSection = null;
-                                                            }
-                                                        }
-                                                    </script>
-                                                    <!-- script for add new address new section form -->
-                                                </div>
+                                    <!-- Address Body -->
+                                    <div class="address-card-body" style="margin-top: 0px; padding-left: 2%; transform: rotateY(0deg); backface-visibility: hidden;">
+                                        <div class="row" style="margin-bottom: 0px;">
+                                            <div class="col-md-3">
+                                                <div style="font-size: 18px; font-weight: 600; color: #333;">{{address.name | capfirst}}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div style="font-size: 18px; font-weight: 600; color: #333;">{{address.contact}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-bottom: 0px;">
+                                            <div class="col-md-12">
+                                                <div style="font-size: 16px; font-weight: 400; color: #555; margin-bottom: 8px;">{{address.address}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-bottom: 10px;">
+                                            <div class="col-md-12">
+                                                <div style="font-size: 16px; font-weight: 400; color: #555;">{{address.locality}}, {{address.city}}, {{address.state}} - <strong>{{address.pincode}}</strong></div>
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Address Body -->
                                 </div>
+                                <!-- Address Card -->
                             </div>
-							
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="review-payment">
-				<h2 style="margin-top:0px;">Review & Payment</h2>
-			</div>
+                        </label>
+                        
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-			<!-- cart detail table -->
-			<div class="table-responsive cart_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="cart_menu">
-							<td class="image">Item</td>
-							<td class="description"></td>
-							<td class="price">Price</td>
-							<td class="quantity">Quantity</td>
-							<td class="total">Total</td>
-							<td class="total" style="text-align:center;">
-								<a href="{% url 'cart_app:clear_cart' %}?retpath=checkout" style="color:white; text-align:right;"
-									onmouseover="this.style.color='#333'" onmouseout="this.style.color='white'">
-									<i class="fa fa-trash-o"></i> Delete All
-								</a>
-							</td>
-						</tr>
-					</thead>
-					<tbody>
-						{% if cart_items %}
-						{% for cart_item in cart_items %}
-							<tr>
-								<td class="cart_product" style="margin:10px;">
-									<a href="{% url 'product_app:productdetail' cart_item.product.slug %}">
-										<img src="{{ cart_item.product.ProductImage.url }}" 
-										alt="{{ cart_item.product.ProductName }}" width="50"></a>
-								</td>
-								<td class="cart_description" style="white-space: normal;">
-									<h4><a href="{% url 'product_app:productdetail' cart_item.product.slug %}">
-										{{cart_item.product.ProductName}}</a></h4>
-								</td>
-								<td class="cart_price">
-									<p>₹{{ cart_item.product.ProductPrice }}</p>
-								</td>
-								<td class="cart_quantity">
-									<div class="btn1" style="display: inline;">
-										<a class="mainusbtn" href="{% url 'cart_app:decrement_cart_quantity' cart_item.id %}?retpath=checkout">-</a>
-										<a class="mainbtn" href="#">{{cart_item.quantity}}</a>
-										<a class="plusbtn" href="{% url 'cart_app:increment_cart_quantity' cart_item.id %}?retpath=checkout">+</a>
-									</div>
-								</td>
-								<td class="cart_total">
-									<p class="cart_total_price">₹{{ cart_item.subtotal }}</p>
-								</td>
-								<td style="margin-right:2%;text-align:center;">
-									<a class="btn btn-default update" style="margin:0px;" href="{% url 'cart_app:delete_cart_item' cart_item.id %}?retpath=checkout">Delete Item</a>
-								</td>
-							</tr>
-						{% endfor %}
-                    	{% else %}
-							<tr>
-								<td colspan="6" style="text-align: center; padding: 20px 0px 20px 0px;">
-									<h4>Your E-Shopper Cart is empty!</h4>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="6" style="text-align: center; padding:0px 0px 10px 0px;">
-									<a href="{% url 'home' %}" class="btn btn-default update"
-										onmouseover="this.style.color='#333';" onmouseout="this.style.color='white';"
-										style="border-radius: 10px; padding:5px 24px 5px 24px;">Shop now</a>
-								</td>
-							</tr>
-						{% endif %}
-						{% if cart_items %}
-						<tr>
-							<td colspan="4">&nbsp;</td>
-							<td colspan="2">
-								<table class="table table-condensed total-result">
-									<tr>
-										<td>Cart Sub Total</td>
-										<td>₹{{ cart_total }}</td>
-									</tr>
-									<tr class="shipping-cost">
-										<td>Shipping Cost</td>
-										<td>₹{{shipping_cost}}</td>										
-									</tr>
-									<tr>
-										<td>Total</td>
-										<td><span>₹{{ cart_total|add:shipping_cost }}</span></td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						{% endif %}
-					</tbody>
-				</table>
-			</div>
-			<!-- cart detail table -->
-			<a class="btn btn-primary" href="#"  style="margin:0px 0px 30px 0px;">Continue</a>
-		</div>
-	</section> <!--/#cart_items-->
+        <div class="review-payment">
+            <h2 style="margin-top:0px;">Review & Payment</h2>
+        </div>
 
-	<style>
-		.btn1 {
-			width: 150px;
-			height: 40px;
-			padding-bottom: 20%;
-		}
-	
-		.btn1 a {
-			background: #FE980F;
-			border: none;
-			/* border-radius: 8%; */
-			padding: 7px 12px;
-			font-size: 1.4rem;
-			color: white;
-			cursor: pointer;
-			outline: none;
-			text-decoration: none;
-			
-		}
-	
-		.plusbtn,
-		.mainusbtn {
-			{% comment %} display: none; {% endcomment %}
-			font-weight: 700;
-		}
-	</style>
+        <!-- cart detail table -->
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Item</td>
+                        <td class="description"></td>
+                        <td class="price">Price</td>
+                        <td class="quantity">Quantity</td>
+                        <td class="total">Total</td>
+                        <td class="total" style="text-align:center;">
+                            <a href="{% url 'cart_app:clear_cart' %}?retpath=checkout" style="color:white; text-align:right;"
+                                onmouseover="this.style.color='#333'" onmouseout="this.style.color='white'">
+                                <i class="fa fa-trash-o"></i> Delete All
+                            </a>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if cart_items %}
+                        {% for cart_item in cart_items %}
+                            <tr>
+                                <td class="cart_product" style="margin:10px;">
+                                    <a href="{% url 'product_app:productdetail' cart_item.product.slug %}">
+                                        <img src="{{ cart_item.product.ProductImage.url }}" 
+                                        alt="{{ cart_item.product.ProductName }}" width="50"></a>
+                                </td>
+                                <td class="cart_description" style="white-space: normal;">
+                                    <h4><a href="{% url 'product_app:productdetail' cart_item.product.slug %}">
+                                        {{cart_item.product.ProductName}}</a></h4>
+                                </td>
+                                <td class="cart_price">
+                                    <p>₹{{ cart_item.product.ProductPrice }}</p>
+                                </td>
+                                <td class="cart_quantity">
+                                    <div class="btn1" style="display: inline;">
+                                        <a class="mainusbtn" href="{% url 'cart_app:decrement_cart_quantity' cart_item.id %}?retpath=checkout">-</a>
+                                        <a class="mainbtn" href="#">{{cart_item.quantity}}</a>
+                                        <a class="plusbtn" href="{% url 'cart_app:increment_cart_quantity' cart_item.id %}?retpath=checkout">+</a>
+                                    </div>
+                                </td>
+                                <td class="cart_total">
+                                    <p class="cart_total_price">₹{{ cart_item.subtotal }}</p>
+                                </td>
+                                <td style="margin-right:2%;text-align:center;">
+                                    <a class="btn btn-default update" style="margin:0px;" href="{% url 'cart_app:delete_cart_item' cart_item.id %}?retpath=checkout">Delete Item</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 20px 0px 20px 0px;">
+                                <h4>Your E-Shopper Cart is empty!</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding:0px 0px 10px 0px;">
+                                <a href="{% url 'home' %}" class="btn btn-default update"
+                                    onmouseover="this.style.color='#333';" onmouseout="this.style.color='white';"
+                                    style="border-radius: 10px; padding:5px 24px 5px 24px;">Shop now</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if cart_items %}
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                        <td colspan="2">
+                            <table class="table table-condensed total-result">
+                                <tr>
+                                    <td>Cart Sub Total</td>
+                                    <td>₹{{ cart_total }}</td>
+                                </tr>
+                                <tr class="shipping-cost">
+                                    <td>Shipping Cost</td>
+                                    <td>₹{{shipping_cost}}</td>										
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <input type="hidden" name="totalamount" value="{{ cart_total|add:shipping_cost }}">
+                                    <td><span>₹{{ cart_total|add:shipping_cost }}</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+        </div>
+        <!-- cart detail table -->
+
+        <!-- payment option -->
+        <div class="payment-options" style="margin-bottom:20px; position: relative; left: 80%;">
+            <input type="radio" id="Cod" name="PaymentType" value="Cash On Delivary" class="form-check-input" style="margin-right: 5px;" required>
+            <label for="Cod" class="form-check-label" style="font-size: 14px; font-weight: 500; color: #878787;">COD</label>
+            <input type="radio" id="Online" name="PaymentType" value="Online" class="form-check-input" style="margin-right: 5px; margin-left:5%;" required >
+            <label for="Online" class="form-check-label" style="font-size: 14px; font-weight: 500; color: #878787;">Online</label>
+        </div>
+        <!-- payment option -->
+
+        <!-- payment button-->
+        <div class="row">
+            <button type="submit" id="payment" class="btn btn-primary" style="margin:0px 0px 30px 0px;  position:relative; left:80%;">Proceed to Payment</button>
+        </div>
+        <!-- payment button-->
+    </form>
+    {% if messages %}
+    <script>
+        {% for message in messages %}
+            alert("{{ message }}")
+        {% endfor %}
+    </script>
+    {% endif %}
+</div>
+<style>
+    .btn1 {
+        width: 150px;
+        height: 40px;
+        padding-bottom: 20%;
+    }
+
+    .btn1 a {
+        background: #FE980F;
+        border: none;
+        /* border-radius: 8%; */
+        padding: 7px 12px;
+        font-size: 1.4rem;
+        color: white;
+        cursor: pointer;
+        outline: none;
+        text-decoration: none;
+        
+    }
+
+    .plusbtn,
+    .mainusbtn {
+        /* display: none; */
+        font-weight: 700;
+    }
+</style>
 {% endblock content %}

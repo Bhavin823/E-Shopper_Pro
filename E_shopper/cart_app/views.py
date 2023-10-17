@@ -139,6 +139,10 @@ def checkoutView(request):
     cart_item = cart.items.all()
     cart_total = sum(item.subtotal() for item in cart_item)
     shipping_cost = 0
+    # retpath = request.POST.get('retpath', '')
+    # selected_address_id = request.POST.get('selected_address')
+    selected_address_id = request.GET.get('selected_address')
+    print("selected_address_id: ",selected_address_id)
     context = {
         'cart_items':cart_item,
         'cart': cart,
@@ -146,6 +150,7 @@ def checkoutView(request):
         'shipping_cost':shipping_cost,
         'user_profile':user_profile,
         'user_addresses': user_addresses,
+        'selected_address_id':selected_address_id,
     }
     
     return render(request, 'cart_app/checkout.html', context)
