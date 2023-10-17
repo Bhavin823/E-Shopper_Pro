@@ -15,6 +15,7 @@
     <form method="post" action="{% url 'order_app:create_order' %}">
         {% csrf_token %}
         <div class="row">
+            <!-- user login detail-->
             <div class="col-sm-3">
                 {% if request.user.is_authenticated %}
                     <h3>Login <i class="fa fa-check" style="font-size: x-large; color:#FE980f"></i></h3>
@@ -35,10 +36,14 @@
                     <a href="{% url 'user_app:login' %}?retpath=checkout">You need to login first</a></h5>
                 {% endif %}
             </div>
+            <!-- user login detail-->
+
+            <!--Address Part-->
             <div class="col-sm-9" style="border:1px solid #ccc">
                 <h3>Delivery Address</h3>
                 <div class="row" style="padding-left: 2%; margin-bottom: 0px; display: flex; justify-content: space-between; width: 100%;">
                     <div style="width: 97%; margin-bottom: 15px; display: flex; flex-direction: column; position: relative;">
+                        <!-- Address List-->
                         {% for address in user_addresses %}
                         <label for="custadd{{forloop.counter}}" style="cursor: pointer;">
                             <div class="address-container" style="border: 1px solid rgb(204, 204, 204); margin-top: 2%; margin-bottom: 2%; width: 100%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); transition: transform 0.2s;">
@@ -82,11 +87,13 @@
                                 <!-- Address Card -->
                             </div>
                         </label>
-                        
                         {% endfor %}
+                        <!-- Address List-->
                     </div>
                 </div>
             </div>
+            <!--Address Part-->
+            
         </div>
 
         <div class="review-payment">
