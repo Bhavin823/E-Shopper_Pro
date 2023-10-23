@@ -105,7 +105,68 @@
             <!-- my oreder section-->
             <div id="MY_ORDERS" class="hidden-section">
                 <!-- Add content for MY ORDERS section here -->
-                <h5>My Orders</h5>
+                <div class="col-sm-9 padding-right">
+                    <div class="left-sidebar">
+                        <div class="panel-group category-products" id="accordian">
+                        <!-- Manage Adresses -->
+                            <div class="row" style="padding-left: 4%;">
+                                <h4 style="display: inline-block; margin-right: 10px;">Manage Addresses</h4>
+                            </div>
+                            
+                            <div class="row" style="padding-left: 2%; margin-bottom: 0px; display: flex; justify-content: space-between; width: 100%;">
+                                <div style="width: 97%; margin-bottom: 15px; display: flex; flex-direction: column; position: relative;">
+                                    <!-- Address List-->
+                                    {% for address in user_addresses %}
+                                    <label for="custadd{{forloop.counter}}" style="cursor: pointer;">
+                                        <div class="address-container" style="border: 1px solid rgb(204, 204, 204); margin-top: 2%; margin-bottom: 2%; width: 100%;">
+                                            <!-- Address Card -->
+                                            <div class="address-card" style="position: relative; transform-style: preserve-3d; transition: transform 0.2s;">
+                                                <!-- Address Header -->
+                                                <div class="address-card-header" style="position: relative; margin-top: 2%;">
+                                                    <span class="address-type" style="margin: 35px 0px 10px 18px; padding: 2px 5px 2px 5px; font-size: 16px; font-weight: 500; color: #878787; background-color: #f0f0f0;">{{address.addresstype}}</span>
+                                                    <div class="form-check mr-5 mb-5" style="position: absolute; right: 12px; transform: translateY(-115%); cursor: pointer;">
+                                                        <input class="form-check-input" type="radio" name="address_id" id="custadd{{forloop.counter}}" value="{{address.id}}" required>
+                                                        <label class="dorm-check-label fw-bold" for="custadd{{forloop.counter}}">
+                                                            Address:{{forloop.counter}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <!-- Address Header -->
+            
+                                                <!-- Address Body -->
+                                                <div class="address-card-body" style="margin-top: 0px; padding-left: 2%; transform: rotateY(0deg); backface-visibility: hidden;">
+                                                    <div class="row" style="margin-bottom: 0px;">
+                                                        <div class="col-md-3">
+                                                            <div style="font-size: 18px; font-weight: 600; color: #333;">{{address.name | capfirst}}</div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div style="font-size: 18px; font-weight: 600; color: #333;">{{address.contact}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-bottom: 0px;">
+                                                        <div class="col-md-12">
+                                                            <div style="font-size: 16px; font-weight: 400; color: #555; margin-bottom: 8px;">{{address.address}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-bottom: 10px;">
+                                                        <div class="col-md-12">
+                                                            <div style="font-size: 16px; font-weight: 400; color: #555;">{{address.locality}}, {{address.city}}, {{address.state}} - <strong>{{address.pincode}}</strong></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Address Body -->
+                                            </div>
+                                            <!-- Address Card -->
+                                        </div>
+                                    </label>
+                                    {% endfor %}
+                                    <!-- Address List-->
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
             </div>
             
 			<!--profile section-->
