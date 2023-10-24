@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import JsonResponse,HttpResponse
 from user_app.models import UserProfile,UserAddress
+from order_app.models import OrderModel
 
 # Create your views here.
 # signup page
@@ -109,6 +110,9 @@ def logouthandle(request):
 def profileView(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     user_addresses = UserAddress.objects.filter(user=request.user)
+    my_order = OrderModel.objects.filter(user=request.user)
+    print("my order: ",my_order)
+
     if request.method == 'POST':
         user_profile.firstname = request.POST.get('firstname')
         user_profile.lastname = request.POST.get('lastname')
@@ -127,6 +131,7 @@ def profileView(request):
     context = {
         'user_profile': user_profile,
         'user_addresses': user_addresses,
+        'my_order' : my_order,
     }
     return render(request,'user_app/profile.html',context)
 
