@@ -77,3 +77,19 @@ def order_detail(request,id):
     }
     return render(request,'order_app/order_detail.html',context)
 
+
+def invoice(request,id):
+    order= OrderModel.objects.get(id=id)
+    # print(order)
+    order_itemm = OrderItem.objects.filter(order=order)
+    # print("order_item: ",order_itemm)
+    total_order_amount = order.total_amount
+    shipping_cost = 0
+
+    context = {
+        'my_order': order,
+        'my_order_item_detail' : order_itemm,
+        'total_order_amount':total_order_amount,
+        'shipping_cost':shipping_cost
+    }
+    return render(request,'order_app/invoice.html',context)

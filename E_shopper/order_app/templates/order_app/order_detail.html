@@ -28,7 +28,7 @@
                                                             <i class="fa fa-file-text" style="font-size: x-large; color:#FE980f;"></i>
                                                         </div>
                                                         <h5 style="font-size:medium;display:inline; margin-top:5px; color:#878787;">Downlod invoice</h5>
-                                                        <button type="submit" id="payment" class="btn btn-primary" style="margin:0px 0px 10px 10px;  position:relative; ">Download</button>
+                                                        <a class="btn btn-primary " style="margin:0px 0px 10px 10px;  position:relative;" href="{% url 'order_app:invoice' my_order.id %}">Download</a>
                                                     </div>
                                                 </div>
                                             </div>
