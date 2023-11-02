@@ -102,35 +102,34 @@
             <!--right part-->
             
             <!-- Sections to show/hide -->
-            <!-- my oreder section-->
+            <!-- my order section-->
             <div id="MY_ORDERS" class="hidden-section">
                 <!-- Add content for MY ORDERS section here -->
                 <div class="col-sm-9 padding-right">
                     <div class="left-sidebar">
                         <div class="panel-group category-products" id="accordian">
-                        <!-- Manage Adresses -->
+                        <!-- Manage Order -->
                             <div class="row" style="padding-left: 4%;">
                                 <h4 style="display: inline-block; margin-right: 10px;">My Orders</h4>
                             </div>
-                            
                             <div class="row" style="padding-left: 2%; margin-bottom: 0px; display: flex; justify-content: space-between; width: 100%;">
                                 <div style="width: 97%; margin-bottom: 15px; display: flex; flex-direction: column; position: relative;">
-                                    <!-- Address List-->
+                                    <!-- Order List-->
                                     {% for order in my_order %}
-                                    <a href="#custadd{{order.id}}" style="text-decoration: none; color: #555;">
-                                        <div class="address-container" style="border: 1px solid rgb(204, 204, 204); margin-top: 2%; margin-bottom: 2%; width: 100%;">
-                                            <!-- Address Card -->
-                                            <div class="address-card" style="position: relative; transform-style: preserve-3d; transition: transform 0.2s;">
-                                                <!-- Address Header -->
-                                                <div class="address-card-header" style="position: relative; margin-top: 2%;">
+                                    <a href="{% url 'order_app:order_detail' order.id %}" style="text-decoration: none; color: #555;">
+                                        <div class="order-container" style="border: 1px solid rgb(204, 204, 204); margin-top: 2%; margin-bottom: 2%; width: 100%;">
+                                            <!-- Order Card -->
+                                            <div class="order-card" style="position: relative; transform-style: preserve-3d; transition: transform 0.2s;">
+                                                <!-- Order Header -->
+                                                <div class="order-card-header" style="position: relative; margin-top: 2%;">
                                                     <span class="order-id" style="margin: 35px 0px 10px 9px; padding: 2px 5px 2px 5px; font-size: 16px; font-weight: 500; ">Order Id: {{order.id}}</span>
                                                     <div class="form-check mr-5 mb-5" style="position: absolute; right: 12px; transform: translateY(-115%); cursor: pointer;">
                                                         <span style="font-size: 16px; font-weight: 500;">Payment Type: {{order.payment_type}}</span>
                                                     </div>
                                                 </div>
-                                                <!-- Address Header -->
-                                                <!-- Address Body -->
-                                                <div class="address-card-body" style="margin-top: 0px; padding-left: 2%; transform: rotateY(0deg); backface-visibility: hidden;">
+                                                <!-- Order Header -->
+                                                <!-- Oreder Body -->
+                                                <div class="order-card-body" style="margin-top: 0px; padding-left: 2%; transform: rotateY(0deg); backface-visibility: hidden;">
                                                     <div class="row" style="margin-bottom: 0px;">
                                                         <div class="col-md-12">
                                                             <div style="font-size: 16px; font-weight: 500; color: #555;">Address: {{order.shipping_address.address}},{{order.shipping_address.locality}}, {{order.shipping_address.city}}, {{order.shipping_address.state}} - {{order.shipping_address.pincode}}</div>
@@ -143,20 +142,21 @@
                                                         <span style="font-size: 16px; font-weight: 500;">Order Amount: {{order.total_amount}}</span>
                                                     </div>
                                                 </div>
-                                                <!-- Address Body -->
+                                                <!-- Order Body -->
                                             </div>
-                                            <!-- Address Card -->
+                                            <!-- Order Card -->
                                         </div>
                                     </a>
                                     {% endfor %}
-                                    <!-- Address List-->
+                                    <!-- Order List-->
                                 </div>
                             </div>
-                        
+                        <!--Manage_Order -->
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- my order section-->
             
 			<!--profile section-->
             <div id="Profile_information" class="hidden-section">

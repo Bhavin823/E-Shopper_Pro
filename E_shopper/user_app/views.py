@@ -110,8 +110,8 @@ def logouthandle(request):
 def profileView(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     user_addresses = UserAddress.objects.filter(user=request.user)
-    my_order = OrderModel.objects.filter(user=request.user)
-    print("my order: ",my_order)
+    my_order = OrderModel.objects.filter(user=request.user).order_by('-id')
+    # print("my order: ",my_order)
 
     if request.method == 'POST':
         user_profile.firstname = request.POST.get('firstname')
@@ -119,15 +119,7 @@ def profileView(request):
         user_profile.contact = request.POST.get('contact')
         user_profile.gender = request.POST.get('gender')
         user_profile.save()
-
-    print(user_profile.user.username)
-    print(user_profile.user.email)
-    print(user_profile.contact)
-    print(user_profile.gender)
-    print(user_profile.firstname)
-    print(user_profile.lastname)
     
-
     context = {
         'user_profile': user_profile,
         'user_addresses': user_addresses,
@@ -190,25 +182,25 @@ def add_address(request):
     retpath = request.GET.get('retpath', '')
     if request.method == 'POST':
         name = request.POST.get('name')
-        print(name)
+        # print(name)
         contact = request.POST.get('mobile')
-        print(contact)
+        # print(contact)
         pincode = request.POST.get('pincode')
-        print(pincode)
+        # print(pincode)
         locality = request.POST.get('locality')
-        print(locality)
+        # print(locality)
         address = request.POST.get('address')
-        print(address)
+        # print(address)
         city = request.POST.get('city')
-        print(city)
+        # print(city)
         state = request.POST.get('state')
-        print(state)
+        # print(state)
         landmark = request.POST.get('landmark')
-        print(landmark)
+        # print(landmark)
         optionalnumber = request.POST.get('optionalNumber')
-        print(optionalnumber)
+        # print(optionalnumber)
         addresstype = request.POST.get('addressType')
-        print(addresstype)
+        # print(addresstype)
 
         address = UserAddress(
             user = request.user,

@@ -1,9 +1,7 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from product_app.models import ProductModel
 from cart_app.models import CartItemModel,CartModel
-from category_app.models import SubCategoryModel
-from django.http import JsonResponse,HttpResponse 
 from user_app.models import UserProfile ,UserAddress
 
 
@@ -142,7 +140,7 @@ def checkoutView(request):
     # retpath = request.POST.get('retpath', '')
     # selected_address_id = request.POST.get('selected_address')
     selected_address_id = request.GET.get('selected_address')
-    print("selected_address_id: ",selected_address_id)
+    # print("selected_address_id: ",selected_address_id)
     context = {
         'cart_items':cart_item,
         'cart': cart,
