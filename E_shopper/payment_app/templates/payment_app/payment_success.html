@@ -1,0 +1,26 @@
+{% extends 'base_app/base.html' %}
+{% load static %}
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <!--signup section-->
+            <div class="col-sm-4 col-sm-offset-1 ">
+                <!--login form-->
+                <div class="login-form" style="text-align: center; margin: 10%;">
+                    <p style="font-size: x-large; font-weight:500">Payment Successful</p>
+                    <p>Thank you for your payment. Your order is confirmed.</p>  
+                    <a href="{% url 'home' %}" class="btn btn-default update"
+                                onmouseover="this.style.color='#333';" onmouseout="this.style.color='white';"
+                                style="border-radius: 10px; padding:5px 24px 5px 24px; margin-left: 0px;">Shop now</a>
+                </div>
+                <!--/login form-->
+            </div>
+            <!--signup section-->
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

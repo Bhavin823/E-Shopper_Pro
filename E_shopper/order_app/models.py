@@ -13,7 +13,10 @@ class OrderModel(models.Model):
     status = models.CharField(max_length=20, default='Pending')
     order_date = models.DateTimeField(auto_now_add=True)    
     ordered_items = models.ManyToManyField(ProductModel, through='OrderItem')
-    
+    razorpay_order_id = models.CharField(max_length=100,null=True)
+    razorpay_payment_id = models.CharField(max_length=100,null=True)
+    razorpay_signature = models.CharField(max_length=100,null=True)
+
     
 class OrderItem(models.Model):
     order = models.ForeignKey(OrderModel, on_delete=models.CASCADE)

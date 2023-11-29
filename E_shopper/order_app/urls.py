@@ -10,6 +10,6 @@ urlpatterns = [
     path('order_detail<int:id>/',order_detail,name='order_detail'),
 
     # invoice
-    path('invoice/<int:id>',invoice, name='invoice'),
+    path('invoice/<int:id>/',invoice, name='invoice'),
 
 ]

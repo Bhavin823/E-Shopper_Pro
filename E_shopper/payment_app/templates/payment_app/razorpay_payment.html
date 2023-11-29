@@ -1,0 +1,151 @@
+{% extends 'base_app/base.html' %}
+{% load static %}
+{% block content %}
+{% load humanize %}
+<section id='cart_items'>
+	<div class="container">
+		<div class="row">
+			<!-- my order summery section-->
+                <!-- ORDERS SUMMERY section here -->
+                <div class="col-sm-12 padding-right">
+                    <div class="panel-group category-products" id="accordian">
+                        <div class="row" style="padding-left: 2%; margin-bottom: 0px; display: flex; justify-content: space-between; width: 100%;">
+                                    <div style="width: 97%; margin-bottom: 15px; display: flex; flex-direction: column; position: relative;">
+                                        <div class="review-payment">
+                                            <h2 style="margin-top:0px;"> Order Review</h2>
+                                        </div>
+                                        <div class="table-responsive cart_info">
+                                            <table class="table table-condensed">
+                                                <thead>
+                                                    <tr class="cart_menu">
+                                                        <td class="image">Item</td>
+                                                        <td class="description">Name</td>
+                                                        <td class="price" style="text-align:center;">Price</td>
+                                                        <td class="quantity">Quantity</td>
+                                                        <td class="total" style="text-align:center;">Total</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for item in my_order_item_detail %}
+                                                        <tr>
+                                                            <td class="cart_product" style="margin:10px;">
+                                                                <a href="{% url 'product_app:productdetail' item.product.slug %}">
+                                                                    <img src="{{ item.product.ProductImage.url }}" 
+                                                                    alt="{{ item.product.ProductName }}" width="50"></a>
+                                                            </td>
+                                                            <td class="cart_description" style="white-space: normal;">
+                                                                <h4><a href="{% url 'product_app:productdetail' item.product.slug %}">
+                                                                    {{item.product.ProductName}}</a></h4>
+                                                            </td>
+                                                            <td class="cart_price" style="text-align:center;">
+                                                                <p>₹{{ item.price|floatformat:"-2"|intcomma }}</p>
+                                                            </td>
+                                                            <td class="cart_quantity" style="margin-right:2%;text-align:center;">
+                                                                <div class="btn1" style="display: inline;">
+                                                                    <a class="mainbtn" href="#">{{item.quantity}}</a>
+                                                                </div>
+                                                            </td>
+                                                            <td class="cart_total" style="text-align:center;">
+                                                                <p class="cart_total_price" style="font-size:18px;">₹{{ item.subtotal|floatformat:"-2"|intcomma  }}</p>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    {% if my_order_item_detail %}
+                                                    <tr>
+                                                        <td colspan="4">&nbsp;</td>
+                                                        <td colspan="2">
+                                                            <table class="table table-condensed total-result">
+                                                                <tr>
+                                                                    <td>Cart Sub Total</td>
+                                                                    <td>₹{{ total_order_amount|floatformat:"-2"|intcomma }}</td>
+                                                                </tr>
+                                                                <tr class="shipping-cost">
+                                                                    <td>Shipping Cost</td>
+                                                                    <td>₹{{ shipping_cost }}</td>										
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Total</td>
+                                                                    <input type="hidden" name="totalamount" value="{{ total_order_amount|add:shipping_cost }}">
+                                                                    <td><span>₹{{ total_order_amount|add:shipping_cost|intcomma }}</span></td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    {% endif %}
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                        <!-- Add Razorpay payment button -->
+                        <form action="{% url 'payment_app:razorpay_payment_success' %}" method="POST">
+                            <script
+                                src="https://checkout.razorpay.com/v1/checkout.js"
+                                data-key="rzp_test_oIfjSKu51zvTk9"  
+                                data-amount="{{ razorpay_order.amount }}"
+                                data-currency="INR"
+                                data-order_id="{{ razorpay_order.id }}"
+                                data-buttontext="Pay with Razorpay"
+                                data-name="E_SHOPPER"
+                                data-description="Payment for Order"
+                                data-image="path_to_your_logo"
+                                data-prefill.name="{{ order.user.username }}"
+                                data-prefill.email="{{ order.user.email }}"
+                                data-theme.color="#528FF0"
+                            ></script>
+                            <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+                            <input type="hidden" name="razorpay_order_id" id="razorpay_order_id">
+                            <input type="hidden" name="razorpay_signature" id="razorpay_signature">
+                        </form>
+                        
+                        <script>
+                            document.querySelector('form').addEventListener('submit', function (e) {
+                                var paymentId = document.querySelector('#razorpay_payment_id');
+                                var orderId = document.querySelector('#razorpay_order_id');
+                                var signature = document.querySelector('#razorpay_signature');
+                                e.preventDefault();
+
+                                // Fetch Razorpay payment ID after successful payment
+                                razorpayClient.on('payment.success', function (response) {
+                                    paymentId.value = response.razorpay_payment_id;
+                                    orderId.value = response.razorpay_order_id;
+                                    signature.value = response.razorpay_signature;                
+
+                                    // Submit the form to your server for further processing
+                                    document.querySelector('form').submit();
+                                },
+                                // Handle payment failure
+                                modal: {
+                                    ondismiss: function () {
+                                        // Redirect to checkout page on payment failure
+                                        window.location.href = "{% url 'cart_app:checkout' %}";
+                                    }
+                                });
+
+                                razorpayClient.open();
+                            });
+                        </script>
+
+                        
+                        <!-- css for payment button -->
+                        <style>
+                        .razorpay-payment-button{  
+                            margin:0px 0px 30px 0px;  
+                            padding:6px 12px;
+                            position:relative; 
+                            left:80%;
+                            background: #FE980F;
+                            border: none;
+                            color: #fff;
+
+                        }
+                        </style>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
+<!--main content-->
+{% endblock content %}    

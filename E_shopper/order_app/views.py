@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 from user_app.models import UserAddress
 from cart_app.models import CartModel,CartItemModel
 from order_app.models import OrderModel,OrderItem
@@ -45,11 +45,11 @@ def create_order(request):
             order.status = 'Pending'
             order.save()
         elif payment_type == 'Online':
-            order.status = 'Paid'
-            order.save()
+            return redirect('payment_app:initialize_razorpay', order_id=order.id)
+            
 
-        cart_items.delete()
-        cart_item.delete()
+        # cart_items.delete()
+        # cart_item.delete()
 
         response_data = {
                 'message': 'Order successfully created',
@@ -85,11 +85,53 @@ def invoice(request,id):
     # print("order_item: ",order_itemm)
     total_order_amount = order.total_amount
     shipping_cost = 0
+    total_payment = total_order_amount+shipping_cost
 
     context = {
         'my_order': order,
         'my_order_item_detail' : order_itemm,
         'total_order_amount':total_order_amount,
-        'shipping_cost':shipping_cost
+        'shipping_cost':shipping_cost,
+        'total_payment':total_payment,
     }
     return render(request,'order_app/invoice.html',context)
+
+from django.template.loader import get_template
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from xhtml2pdf import pisa
+
+def render_to_pdf(template_path, context_dict):
+    template = get_template(template_path)
+    html = template.render(context_dict)
+    pdf_buffer = BytesIO()
+
+    pisa_status = pisa.CreatePDF(html, dest=pdf_buffer)
+
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+
+    pdf_buffer.seek(0)
+    pdf = HttpResponse(pdf_buffer.read(), content_type='application/pdf')
+    pdf['Content-Disposition'] = 'attachment; filename="invoice.pdf"'
+    return pdf
+
+def gen_invoice(request,id):
+    order= OrderModel.objects.get(id=id)
+    # print(order)
+    order_itemm = OrderItem.objects.filter(order=order)
+    # print("order_item: ",order_itemm)
+    total_order_amount = order.total_amount
+    shipping_cost = 0
+    total_payment = total_order_amount+shipping_cost
+
+    context = {
+        'my_order': order,
+        'my_order_item_detail' : order_itemm,
+        'total_order_amount':total_order_amount,
+        'shipping_cost':shipping_cost,
+        'total_payment':total_payment,
+    }
+
+    pdf = render_to_pdf('order_app/invoice.html', context)
+    return pdf
