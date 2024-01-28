@@ -30,7 +30,7 @@ DEBUG = False
 
 # settings.py
 
-ALLOWED_HOSTS = ['e-shopper-pl0g.onrender.com', 'subdomain.e-shopper-pl0g.onrender.com', '192.168.1.100']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'e-shopper-pl0g.onrender.com']
 
 
 
