@@ -108,9 +108,14 @@ WSGI_APPLICATION = 'E_shopper.wsgi.application'
 import dj_database_url
 import os
 
+os.environ["DATABASE_URL"] = "postgres://testdb_9vo5_user:Swa2dk9XN39TvAQTW8fhXGyjhw9XFdAW@dpg-cmr02r2cn0vc73dqiuo0-a.singapore-postgres.render.com/testdb_9vo5"
 DATABASES = {
-	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"), conn_max_age=600)
 }
+
+# DATABASES = {
+# 	"default": dj_database_url.parse(os.environ.get("postgres://testdb_9vo5_user:Swa2dk9XN39TvAQTW8fhXGyjhw9XFdAW@dpg-cmr02r2cn0vc73dqiuo0-a.singapore-postgres.render.com/testdb_9vo5"), engine='django.db.backends.postgresql')
+# }
 
 
 # Password validation
@@ -153,6 +158,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
     ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
