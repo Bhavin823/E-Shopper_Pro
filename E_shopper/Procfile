@@ -1,1 +1,2 @@
-web: gunicorn E_shopper.wsgi
+web: gunicorn E_shopper.wsgi:application
+
