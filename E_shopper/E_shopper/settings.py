@@ -30,7 +30,7 @@ DEBUG = False
 
 # settings.py
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'e-shopper-pl0g.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'e-shopper-j223.onrender.com']
 
 
 
