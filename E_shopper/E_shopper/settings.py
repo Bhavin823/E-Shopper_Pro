@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hxv9tg85@0w825g#!(#_--g==i(vvi-dsy560qns$i^g#_$bm0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -89,23 +89,18 @@ WSGI_APPLICATION = 'E_shopper.wsgi.application'
 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME' : 'e-shopper',
-#         'USER' : 'postgres',
-#         'PASSWORD' : 'admin',
-#         'HOST' : 'localhost',
-#         'PORT' : '5432', 
-#     }
-# }
-
-import dj_database_url
-import os
-
 DATABASES = {
-	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME' : 'e-shopper',
+        'USER' : 'postgres',
+        'PASSWORD' : 'admin',
+        'HOST' : 'localhost',
+        'PORT' : '5432', 
+    }
 }
+
+
 
 
 # Password validation
