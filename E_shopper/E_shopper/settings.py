@@ -166,7 +166,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATIC_ROOT = '/opt/render/project/src/E_shopper/staticfiles'
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # as per redner doc
 
