@@ -30,7 +30,7 @@ DEBUG = False
 
 # settings.py
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'e-shopper-j223.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'e-shopper-pl0g.onrender.com']
 
 
 
@@ -58,7 +58,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -109,14 +108,9 @@ WSGI_APPLICATION = 'E_shopper.wsgi.application'
 import dj_database_url
 import os
 
-os.environ["DATABASE_URL"] = "postgres://testdb_9vo5_user:Swa2dk9XN39TvAQTW8fhXGyjhw9XFdAW@dpg-cmr02r2cn0vc73dqiuo0-a.singapore-postgres.render.com/testdb_9vo5"
 DATABASES = {
-    "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"), conn_max_age=600)
+	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
-
-# DATABASES = {
-# 	"default": dj_database_url.parse(os.environ.get("postgres://testdb_9vo5_user:Swa2dk9XN39TvAQTW8fhXGyjhw9XFdAW@dpg-cmr02r2cn0vc73dqiuo0-a.singapore-postgres.render.com/testdb_9vo5"), engine='django.db.backends.postgresql')
-# }
 
 
 # Password validation
@@ -155,26 +149,10 @@ USE_TZ = True
 
 
 
-# STATIC_URL = 'static/'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static')
-#     ]
-
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# as per render doc
 STATIC_URL = '/static/'
-
-# Following settings only make sense on production and may break development environments.
-if not DEBUG:
-    # Tell Django to copy statics to the `staticfiles` directory
-    # in your application directory on Render.
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-    # Turn on WhiteNoise storage backend that takes care of compressing static files
-    # and creating unique names for each version so they can safely be cached forever.
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# as per redner doc
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+    ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
