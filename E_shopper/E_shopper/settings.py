@@ -24,14 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hxv9tg85@0w825g#!(#_--g==i(vvi-dsy560qns$i^g#_$bm0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-# ALLOWED_HOSTS = ['e-shopper-pl0g.onrender.com']
-
-# settings.py
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'e-shopper-pl0g.onrender.com']
-
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -149,7 +144,7 @@ USE_TZ = True
 
 
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
     ]
