@@ -95,7 +95,7 @@
 								<li><a href="{% url 'user_app:profile' %}"><i class="fa fa-user"></i> Profile</a></li>
 								<li><a href="{% url 'user_app:logouthandle' %}"><i class="fa fa-long-arrow-right"></i> Logout</a></li>
 								{% else %}
-								<li><a href="#cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								<li><a href="{% url 'cart_app:cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
 								<li><a href="{% url 'user_app:signup' %}"><i class="fa fa-sign-in"></i> Sign up</a></li>
 								<li><a href="{% url 'user_app:login' %}"><i class="fa fa-lock"></i> Login</a></li>
 								{% endif %}
@@ -126,8 +126,8 @@
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="{% url 'product_app:products' 'all' %}">Products</a></li>
-										<li><a href="#checkout.html">Checkout</a></li> 
-										<li><a href="#cart.html">Cart</a></li> 
+										<li><a href="{% url 'cart_app:checkout' %}">Checkout</a></li> 
+										<li><a href="{% url 'cart_app:cart'%}">Cart</a></li> 
 										<li><a href="{% url 'user_app:login' %}">Login</a></li> 
                                     </ul>
                                 </li> 
