@@ -59,7 +59,8 @@ def create_order(request):
             }
    
 
-    return JsonResponse(response_data)
+    # return JsonResponse(response_data)
+    return render(request, 'payment_app/payment_success.html')
 
 def order_detail(request,id):
     order= OrderModel.objects.get(id=id)
